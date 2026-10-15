@@ -1,0 +1,2480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANNIE LAM — UX DESIGNER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f3f1ec;
+    --ink: #111111;
+    --ink-soft: #2a2a2a;
+    --muted: #6b6b6b;
+    --line: #1a1a1a;
+    --accent: #2d4a2b;
+    --rain: #4a6d8c;
+    --paper: #ebe7df;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 9999;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 40px;
+    mix-blend-mode: difference;
+    color: #f3f1ec;
+  }
+  nav .logo {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  nav ul { list-style: none; display: flex; gap: 32px; }
+  nav a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-decoration: none;
+    color: inherit;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    position: relative;
+    transition: opacity 0.3s;
+    cursor: pointer;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0; height: 1px;
+    background: currentColor;
+    transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  nav a:hover::after { width: 100%; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 140px 40px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    position: relative;
+  }
+  .hero-marker {
+    position: absolute;
+    top: 100px;
+    left: 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .hero-marker::before { content: '◆'; margin-right: 8px; color: var(--rain); }
+
+  .hero h1 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(72px, 13vw, 220px);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    grid-column: 1 / -1;
+    margin-bottom: 40px;
+  }
+  .hero h1 .italic, .italic {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-style: italic;
+    text-transform: lowercase;
+    letter-spacing: -0.02em;
+  }
+  .hero-left { max-width: 480px; }
+  .hero-tagline {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(22px, 2.4vw, 32px);
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 32px;
+  }
+  .hero-tagline em { font-style: italic; color: var(--rain); }
+  .hero-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    line-height: 1.8;
+  }
+  .hero-meta span { color: var(--ink); }
+  .hero-right { justify-self: end; text-align: right; }
+  .hero-availability {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    margin-bottom: 24px;
+  }
+  .pulse {
+    width: 8px; height: 8px;
+    background: #2d8a3e;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  /* SECTION HEADERS */
+  .section-label {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 0 40px;
+    margin-bottom: 60px;
+  }
+  .section-label .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .section-label h2 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(48px, 8vw, 120px);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+
+  /* PROJECTS LIST */
+  #projects { padding: 120px 0 80px; }
+
+  .project {
+    border-top: 1px solid var(--line);
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 80px 1fr 1.2fr 200px;
+    gap: 40px;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.4s cubic-bezier(0.19, 1, 0.22, 1), padding 0.4s cubic-bezier(0.19, 1, 0.22, 1), color 0.4s;
+    position: relative;
+    background: transparent;
+    border-left: none; border-right: none;
+    width: 100%;
+    text-align: left;
+    color: inherit;
+    font-family: inherit;
+  }
+  #projects > .project:last-of-type { border-bottom: 1px solid var(--line); }
+
+  .project:hover {
+    background: var(--ink);
+    color: var(--bg);
+    padding-left: 60px;
+  }
+  .project:hover .project-arrow { transform: rotate(45deg); }
+  .project:hover .project-num { color: var(--bg); }
+  .project.open .project-arrow { transform: rotate(45deg); background: currentColor; color: var(--bg); }
+  .project.open { background: var(--ink); color: var(--bg); padding-left: 60px; }
+  .project.open .project-num { color: var(--bg); }
+
+  .project-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    transition: color 0.4s;
+  }
+  .project-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(28px, 3.6vw, 52px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .project-tags {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;
+  }
+  .project-tags span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid currentColor;
+    opacity: 0.7;
+    border-radius: 2px;
+  }
+  .project-desc {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    line-height: 1.45;
+    max-width: 460px;
+  }
+  .project-right {
+    display: flex; justify-content: flex-end; align-items: center; gap: 16px;
+  }
+  .project-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+  }
+  .project-arrow {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    font-size: 18px;
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  /* EXPANDED CASE STUDY */
+  .case-study {
+    max-height: 0;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--ink);
+    border-top: 1px solid var(--line);
+    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+  }
+  .case-study.open {
+    max-height: 30000px;
+  }
+  .case-inner { padding: 80px 40px; }
+
+  .case-meta-bar {
+    display: flex; gap: 32px; flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .case-meta-bar span::before { content: '◆ '; color: var(--rain); }
+
+  .case-headline {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(40px, 7vw, 96px);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .case-subhead {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(18px, 2vw, 24px);
+    line-height: 1.4;
+    max-width: 780px;
+    margin-bottom: 64px;
+  }
+  .case-subhead em { font-style: italic; color: var(--rain); }
+
+  /* Overview grid */
+  .overview {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 64px;
+  }
+  .overview > div {
+    padding: 28px 24px;
+    border-right: 1px solid var(--line);
+  }
+  .overview > div:last-child { border-right: none; }
+  .overview h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .overview p {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  /* Content blocks */
+  .case-block {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 60px;
+    margin-bottom: 80px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+  .case-block:last-of-type { border-bottom: none; }
+
+  .block-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .block-label h3 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 28px;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    margin-top: 12px;
+  }
+  .block-body {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    line-height: 1.55;
+  }
+  .block-body p { margin-bottom: 18px; }
+  .block-body em { font-style: italic; color: var(--rain); }
+  .block-body strong { font-weight: 500; border-bottom: 1px solid currentColor; }
+
+  /* Stats */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    margin: 24px 0;
+  }
+  .stats > div {
+    background: var(--bg);
+    padding: 24px 20px;
+  }
+  .stat-num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 48px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin-bottom: 6px;
+  }
+  .stat-num .italic { font-family: 'Fraunces', serif; font-weight: 300; }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Finding cards */
+  .finding {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+  }
+  .finding:last-child { border-bottom: none; }
+  .finding-num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--rain);
+  }
+  .finding h4 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+    line-height: 1.1;
+  }
+  .finding p {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  /* Pullquote */
+  .pullquote-block {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 80px 40px;
+    margin: 60px -40px;
+    text-align: center;
+  }
+  .pullquote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(28px, 4vw, 56px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .pullquote::before { content: '"'; color: #a8c4d8; }
+  .pullquote::after { content: '"'; color: #a8c4d8; }
+  .pullquote em { color: #a8c4d8; }
+  .pullquote-attr {
+    margin-top: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(243, 241, 236, 0.6);
+  }
+
+  /* Recommendation cards */
+  .recs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .rec {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 24px;
+  }
+  .rec-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rain);
+    margin-bottom: 12px;
+  }
+  .rec h5 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 17px;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    line-height: 1.15;
+  }
+  .rec p {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* Visual illustrations inside case studies */
+  /* Figures (images inside case studies) */
+  .fig {
+    margin: 32px 0 8px;
+  }
+  .fig img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: zoom-in;
+  }
+  .fig figcaption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+  .fig-chart { max-width: 640px; }
+
+  /* Rows of phone screens */
+  .phone-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+  .phone-grid-5 { grid-template-columns: repeat(5, 1fr); }
+  .phone-grid-6 { grid-template-columns: repeat(6, 1fr); }
+  .phone-row img { background: #fff; }
+
+  /* Side-by-side figure grids */
+  .fig-grid { display: grid; gap: 16px; margin: 8px 0; }
+  .fig-grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .fig-grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .fig-grid .fig { margin: 16px 0 0; }
+
+  @media (max-width: 900px) {
+    .phone-grid, .phone-grid-5, .phone-grid-6 {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 12px;
+      padding-bottom: 8px;
+    }
+    .phone-grid { align-items: flex-start; }
+    .phone-grid img { flex: 0 0 62%; width: 62%; min-width: 0; scroll-snap-align: start; }
+    .fig-grid-2, .fig-grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* Embedded prototypes (Figma) */
+  .embed { margin: 32px 0 8px; }
+  .embed-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border: 1px solid var(--line);
+    background: #fff;
+  }
+  .embed-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .embed figcaption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+  @media (max-width: 900px) {
+    .embed-frame { aspect-ratio: 9 / 16; max-height: 80vh; }
+  }
+
+
+  /* Survey bar charts */
+  .chart-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 16px 0 20px; }
+  .bar-chart { border: 1px solid var(--line); background: var(--paper); padding: 20px; }
+  .bar-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; line-height: 1.5; }
+  .bar-row { display: grid; grid-template-columns: minmax(90px, 38%) 1fr 48px; align-items: center; gap: 10px; margin: 7px 0; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+  .bar-label { overflow-wrap: anywhere; }
+  .bar-track { height: 12px; background: rgba(0,0,0,0.06); }
+  .bar-fill { display: block; height: 100%; background: var(--rain); }
+  .bar-val { text-align: right; color: var(--ink); }
+  .result-title { font-family: 'Archivo Black', sans-serif; font-size: 17px; text-transform: uppercase; letter-spacing: -0.01em; line-height: 1.2; margin: 36px 0 4px; }
+
+  /* Quotes inside findings */
+  .quote { margin: 14px 0 0; padding-left: 16px; border-left: 2px solid var(--rain); font-style: italic; font-size: 16px; line-height: 1.5; }
+  .quote cite { display: block; font-style: normal; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+  .fine-print { font-family: 'JetBrains Mono', monospace; font-size: 11px !important; line-height: 1.6 !important; color: var(--muted); margin-top: 20px; }
+
+  /* Brand swatches and type specimens */
+  .swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; }
+  .swatch { border: 1px solid var(--line); background: #fff; font-size: 13px; display: flex; flex-direction: column; }
+  .swatch-chip { height: 72px; border-bottom: 1px solid var(--line); }
+  .swatch b, .swatch code, .swatch small { padding: 0 12px; }
+  .swatch b { padding-top: 10px; font-family: 'Archivo Black', sans-serif; font-weight: normal; text-transform: uppercase; font-size: 12px; }
+  .swatch code { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .swatch small { padding-bottom: 12px; color: var(--muted); font-size: 11px; line-height: 1.4; margin-top: 4px; }
+  .type-specimens { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .type-spec { border: 1px solid var(--line); background: #F7F5F2; padding: 24px; }
+  .type-sample { display: block; font-size: 44px; line-height: 1.1; color: #20262D; margin-bottom: 12px; }
+  .type-spec b { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: normal; letter-spacing: 0.06em; text-transform: uppercase; }
+  .type-spec p { font-size: 15px !important; margin: 8px 0 0 !important; }
+
+  /* Proposed vs shipped table */
+  .cmp-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
+  .cmp-table th { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-align: left; border-bottom: 1px solid var(--line); padding: 8px; }
+  .cmp-table td { border-bottom: 1px solid rgba(0,0,0,0.1); padding: 10px 8px; vertical-align: top; }
+
+  /* Video embeds */
+  .embed-16x9 { aspect-ratio: 16 / 9 !important; max-height: none !important; }
+  .embed-vertical { aspect-ratio: 9 / 16 !important; max-width: 340px; max-height: none !important; }
+
+  @media (max-width: 900px) {
+    .chart-pair, .type-specimens { grid-template-columns: 1fr; }
+    .swatches { grid-template-columns: 1fr 1fr; }
+    .cmp-table { font-size: 13px; }
+  }
+
+
+  .fig-poster { max-width: 440px; margin: 0 auto 48px; }
+  .fig-tall img { max-height: 900px; object-fit: cover; object-position: top; }
+
+
+  /* Contact links */
+  a.contact-item { color: inherit; text-decoration: none; position: relative; transition: background 0.3s, color 0.3s; }
+  a.contact-item:hover { background: var(--ink); color: var(--bg); }
+  a.contact-item:hover .label { color: rgba(243, 241, 236, 0.6); }
+  a.contact-item.is-external::after { content: '↗'; position: absolute; top: 28px; right: 24px; font-size: 18px; }
+  .contact-item .value { font-size: 18px; }
+  @media (max-width: 1199px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) {
+    .contact-grid { grid-template-columns: 1fr !important; }
+    .contact-item .value { font-size: clamp(14px, 4.2vw, 20px); }
+  }
+
+  .inline-link { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+  .inline-link:hover { color: var(--rain); }
+
+
+  /* ---- Image sizing pass ---- */
+  /* Case-study opening images: match the content width, never full-bleed */
+  .fig-hero { max-width: 880px; }
+  /* Single images inside a section: comfortable reading width */
+  .block-body > .fig:not(.fig-chart):not(.fig-poster) { max-width: 860px; }
+  /* Tall screenshots: cap height and show the top; click enlarges the full image */
+  .fig-tall img { max-height: min(900px, 75vh) !important; object-fit: cover; object-position: top; }
+
+  /* Side-by-side grids: equal boxes */
+  .fit-square .fig img { aspect-ratio: 1 / 1; object-fit: contain; }
+  .fit-43 .fig img { aspect-ratio: 4 / 3; object-fit: contain; }
+  .fit-169 .fig img { aspect-ratio: 16 / 9; object-fit: contain; }
+  .crop-45 .fig img { aspect-ratio: 4 / 5; object-fit: cover; object-position: top; max-height: none !important; }
+  .crop-1610 .fig img { aspect-ratio: 2 / 1; object-fit: cover; object-position: left top; }
+
+  /* Phone screens: one row of equal cards, same height, top of each screen shown */
+  .phone-row { max-width: none !important; }
+  .phone-grid { display: grid !important; gap: 14px; grid-template-columns: repeat(4, minmax(0, 220px)); }
+  .phone-grid-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .phone-grid-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .phone-grid img { width: 100%; height: auto; aspect-ratio: 394 / 852; object-fit: cover; object-position: top; }
+  @media (max-width: 900px) {
+    .phone-grid, .phone-grid-5, .phone-grid-6 { display: flex !important; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; }
+    .phone-grid img { flex: 0 0 62%; width: 62%; scroll-snap-align: start; }
+  }
+
+
+  /* Experience entries: one block per job */
+  .about-side li.job { align-items: flex-start; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .about-side li.job:last-child { border-bottom: none; }
+  .job-main { display: flex; flex-direction: column; gap: 2px; }
+  .job-main b { font-weight: 500; color: var(--ink); }
+  .job-main small { font-size: 11px; color: var(--muted); }
+  .about-side li.job > span:last-child { white-space: nowrap; }
+
+
+  /* ---- Alignment pass: every image block spans the full text column ---- */
+  .case-inner > .fig, .block-body > .fig,
+  .fig-hero, .fig-poster, .fig-chart { max-width: none !important; margin-left: 0 !important; margin-right: 0 !important; }
+  .case-inner > .fig { margin: 8px 0 56px !important; }
+  /* Single images sit inside a full-width frame, height-capped, never cropped */
+  .case-inner > .fig:not(.fig-tall) img,
+  .block-body > .fig:not(.fig-tall) img { width: 100%; max-height: 620px; object-fit: contain; background: #fff; }
+  /* Long screenshots: same frame width, show the top; click opens the full page */
+  .fig-tall img { max-height: 620px !important; object-fit: cover; object-position: top; }
+  /* Phone rows centred in the column */
+  .phone-grid { justify-content: center; }
+  /* Breathing room after any image group before the next paragraph */
+  .fig-grid { margin-bottom: 28px !important; }
+  .block-body > .fig { margin-bottom: 28px; }
+  /* Opening grid (e.g. Mercer before/after) spacing to match */
+  .case-inner > .fig-grid { margin: 8px 0 56px !important; }
+
+  .headshot { margin: 0 auto; }
+  .headshot-caption { text-align: center !important; }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(17, 17, 17, 0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    background: #fff;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #f3f1ec;
+    background: none;
+    border: 1px solid #f3f1ec;
+    padding: 8px 14px;
+    cursor: pointer;
+  }
+
+  .visual-block {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 60px 40px;
+    margin: 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 360px;
+    position: relative;
+    overflow: hidden;
+  }
+  .visual-caption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  /* Two column layout for inside case studies */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 24px 0;
+  }
+  .two-col > div {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 28px;
+  }
+  .two-col h5 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+  .two-col ul { list-style: none; }
+  .two-col li {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    display: flex;
+    gap: 10px;
+  }
+  .two-col li:last-child { border: none; }
+  .two-col li::before {
+    content: '→';
+    color: var(--rain);
+    flex-shrink: 0;
+  }
+
+  /* MARQUEE */
+  .marquee {
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 24px 0;
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .marquee-inner {
+    display: flex;
+    gap: 60px;
+    white-space: nowrap;
+    animation: scroll 40s linear infinite;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 48px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .marquee-inner span { display: flex; align-items: center; gap: 60px; }
+  .marquee-inner span::after {
+    content: '✻';
+    color: var(--rain);
+    font-size: 32px;
+  }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ABOUT */
+  #about {
+    padding: 120px 0 80px;
+    background: var(--paper);
+    margin-top: 80px;
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    padding: 0 40px;
+    align-items: start;
+  }
+  .about-text {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(22px, 2.1vw, 28px);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  .about-text p { margin-bottom: 24px; }
+  .about-text em { font-style: italic; color: var(--rain); }
+  .about-text strong { font-weight: 500; border-bottom: 2px solid var(--ink); }
+  .about-side {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .headshot-wrap {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .headshot {
+    width: 100%;
+    max-width: 340px;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(100%) contrast(1.05);
+    transition: filter 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    border: 1px solid var(--line);
+  }
+  .headshot:hover {
+    filter: grayscale(0%) contrast(1);
+  }
+  .headshot-caption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 10px;
+    text-align: center;
+  }
+  .about-side h4 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 32px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .about-side h4:first-child { margin-top: 0; }
+  .about-side ul { list-style: none; }
+  .about-side li {
+    padding: 6px 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .about-side li span:last-child { color: var(--muted); }
+
+  /* CONTACT */
+  #contact {
+    padding: 120px 40px 60px;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .contact-intro {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .contact-headline {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(56px, 11vw, 180px);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    margin-bottom: 60px;
+  }
+  .contact-headline a {
+    color: inherit;
+    text-decoration: none;
+    background-image: linear-gradient(var(--ink), var(--ink));
+    background-size: 0 4px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  .contact-headline a:hover { background-size: 100% 4px; }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .contact-item {
+    background: var(--bg);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 160px;
+  }
+  .contact-item .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .contact-item .value {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin-top: auto;
+    white-space: nowrap;
+    font-size: clamp(14px, 4.2vw, 20px);
+  }
+
+  footer {
+    padding: 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 20px; }
+    nav ul { gap: 18px; }
+    .hero { grid-template-columns: 1fr; padding: 120px 20px 40px; gap: 32px; }
+    .hero-marker { left: 20px; }
+    .hero-right { justify-self: start; text-align: left; }
+    .section-label { padding: 0 20px; }
+    .project {
+      grid-template-columns: 40px 1fr 50px;
+      padding: 28px 20px;
+      gap: 16px;
+    }
+    .project:hover, .project.open { padding-left: 28px; }
+    .project-desc, .project-year { display: none; }
+    .project-right { gap: 8px; }
+    .case-inner { padding: 50px 20px; }
+    .overview { grid-template-columns: 1fr 1fr; }
+    .overview > div:nth-child(2) { border-right: none; }
+    .overview > div:nth-child(3) { border-top: 1px solid var(--line); }
+    .overview > div:nth-child(4) { border-top: 1px solid var(--line); border-right: none; }
+    .case-block { grid-template-columns: 1fr; gap: 24px; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .recs { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .pullquote-block { margin: 40px -20px; padding: 50px 20px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; padding: 0 20px; }
+    #contact { padding: 80px 20px 40px; }
+    .marquee-inner { font-size: 32px; gap: 40px; }
+    .marquee-inner span { gap: 40px; }
+    footer { padding: 24px 20px; flex-direction: column; gap: 12px; }
+    .finding { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#top" class="logo">ANNIE LAM ✻ 2026</a>
+  <ul>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <span class="hero-marker">UX / UI DESIGNER — Based in Seattle, WA</span>
+
+  <h1>
+    Annie<br>
+    <span class="italic">designs for</span><br>
+    humans.
+  </h1>
+
+  <div class="hero-left">
+    <p class="hero-tagline">
+      I'm a senior at the <em>University of Washington</em> studying Human Centered Design & Engineering — building research-driven products that actually solve problems for real people.
+    </p>
+    <div class="hero-meta">
+      <div><span>↳</span> Studying — HCDE, UW (B.S. 2027, 3.57 GPA)</div>
+      <div><span>↳</span> Recent — UX/UI Intern, Mercer Island Capital</div>
+      <div><span>↳</span> Tools — Figma, Framer, FigJam, WordPress</div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-availability">
+      <span class="pulse"></span>
+      Open to summer 2027 internships
+    </div>
+    <div class="hero-meta" style="margin-top: 16px;">
+      <div><span>(206)</span> 483-7601</div>
+      <div>annielam483@gmail.com</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">
+    <span class="num">01 / WORK</span>
+    <h2>Selected <span class="italic">projects</span></h2>
+  </div>
+
+  <!-- PROJECT 1: RAIN -->
+  <button class="project" onclick="toggleProject(this)">
+    <span class="project-num">№ 001</span>
+    <div>
+      <div class="project-title">UW Rain <span class="italic">experience</span></div>
+      <div class="project-tags">
+        <span>UX Research</span>
+        <span>Field · Interviews · Survey</span>
+        <span>HCDE 313</span>
+      </div>
+    </div>
+    <p class="project-desc">A term-long research project on how UW students get around campus in Seattle's rainy season — three connected studies, from watching behavior in Red Square to validating it with a survey of 17 students.</p>
+    <div class="project-right">
+      <span class="project-year">2025</span>
+      <span class="project-arrow">+</span>
+    </div>
+  </button>
+  <div class="case-study">
+    <div class="case-inner">
+      <div class="case-meta-bar">
+        <span>HCDE 313 — User-Centered Design Research</span>
+        <span>Fall 2025</span>
+        <span>Solo project</span>
+        <span>Observe → Ask → Validate</span>
+      </div>
+      <h2 class="case-headline">Rain isn't just <span class="italic">weather.</span></h2>
+      <p class="case-subhead">Helping UW students protect themselves from rain — a user research project combining field observation, semi-structured interviews, and a validating survey to find out what would <em>actually</em> help.</p>
+
+      <figure class="fig fig-hero"><img src="images/rain-red-square.webp" alt="Wide view of Red Square on the UW campus under a cloudy sky, with brick paving and the campanile" loading="lazy"><figcaption>Red Square — high foot traffic, minimal overhead coverage, and the site of all three phases of research.</figcaption></figure>
+
+      <div class="overview">
+        <div><h4>Focus</h4><p>Rain protection and mobility on UW's Seattle campus.</p></div>
+        <div><h4>Role</h4><p>Research planning, field study, interviews, survey design and synthesis.</p></div>
+        <div><h4>Tools</h4><p>Google Forms, Otter.ai, Google Sheets, FigJam.</p></div>
+        <div><h4>Deliverables</h4><p>Field study report, interview top-line report, survey plan and findings presentation.</p></div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">01 / Problem<h3>Owning gear isn't <span class="italic">the same</span> as being protected.</h3></div>
+        <div class="block-body">
+          <p>Seattle sees rain nearly half the year, and the rainiest months — fall through spring — overlap almost entirely with the academic calendar. Students are constantly moving between buildings, transit, and home in wet conditions.</p>
+          <p>An Axios Seattle survey found that <strong>82% of people own an umbrella, but only 6% use one exclusively</strong> when it rains. Ownership isn't the issue — consistent, convenient use is. That gap became the starting point.</p>
+          <p><strong>Design question:</strong> How can we help people on campus protect themselves from rain?</p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">02 / Approach<h3>Three studies, <span class="italic">each</span> answering the last.</h3></div>
+        <div class="block-body">
+          <p>Each phase narrowed the question and tested what the previous one couldn't answer on its own — observation to see behavior, interviews to understand motivation, and a survey to check whether it generalized.</p>
+          <div class="recs">
+            <div class="rec"><div class="rec-tag">Phase 1 — Observe</div><h5>Field study</h5><p>Three 30-minute sessions in Red Square during light-to-moderate rain.</p></div>
+            <div class="rec"><div class="rec-tag">Phase 2 — Ask</div><h5>Interviews</h5><p>Three semi-structured interviews, about 20 minutes each.</p></div>
+            <div class="rec"><div class="rec-tag">Phase 3 — Validate</div><h5>Survey</h5><p>A 12-question survey, 17 respondents, via Google Forms.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">03 / Field study<h3>Reading rain behavior <span class="italic">in</span> Red Square.</h3></div>
+        <div class="block-body">
+          <p>Red Square is one of UW's busiest and least sheltered spaces — brick paving, minimal overhead coverage, and a direct route between Odegaard, Suzzallo, and Kane. I observed from under the Odegaard awning on October 12, 18, and 19, taking structured notes across six focus areas: built environment, possessions, tools and technology, traffic, information access, and overall experience.</p>
+          <figure class="fig"><img src="images/rain-odegaard-vantage.webp" alt="View across Red Square from under the Odegaard Library awning, framed by brick columns" loading="lazy"><figcaption>The observation vantage point: under the Odegaard awning, looking across Red Square toward Suzzallo and Kane.</figcaption></figure>
+          <figure class="fig">
+            <img src="images/rain-field-odegaard.jpg" alt="Annotated field observation photo of the Odegaard Library entrance in Red Square, with sketches of students sharing an umbrella and a short queue at the ID scanner" loading="lazy">
+            <figcaption>The Odegaard entrance — a short queue forms at the ID scanner as students wait to enter together, one of the few sheltered spots in Red Square.</figcaption>
+          </figure>
+          <div class="finding">
+            <div class="finding-num">01</div>
+            <div>
+              <h4>Improvised rain protection was the norm</h4>
+              <p>Most people used whatever they had on hand — folders, tote bags, sleeves, hoods worn half-up. Even students carrying rain jackets often left the hood down.</p>
+              <blockquote class="quote">"Female student leaving Suzzallo wearing oversized hoodie and leggings, hood halfway on, holding tote bag over her head while fast-walking toward Odegaard."<cite>Field notes, session 1</cite></blockquote>
+            </div>
+          </div>
+          <div class="finding">
+            <div class="finding-num">02</div>
+            <div>
+              <h4>Minimal coverage created predictable congestion</h4>
+              <p>With almost no covered path between buildings, people funneled toward the few awnings — pausing to reorganize belongings or wait for friends. The Odegaard entrance became a reliable bottleneck.</p>
+              <blockquote class="quote">"Students often crowd at the Ode entrance while waiting for someone to scan in, then all collectively walk in."<cite>Field notes, session 2</cite></blockquote>
+            </div>
+          </div>
+          <div class="finding">
+            <div class="finding-num">03</div>
+            <div>
+              <h4>Rain reshaped, but didn't erase, social behavior</h4>
+              <p>Groups were visibly more relaxed than solo walkers — chatting, laughing, occasionally sharing an umbrella — and often paused under awnings together before splitting off.</p>
+            </div>
+          </div>
+          <figure class="fig">
+            <img src="images/rain-affinity-map.png" alt="Affinity map with eight categories: social interactions, improvised rain protection, umbrella use, movement and route decisions, emotional expressions, technology use, environment conditions, and items held while walking" loading="lazy">
+            <figcaption>Affinity diagram clustering raw field notes into themes. Click to enlarge.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">04 / Interviews<h3>Why students make <span class="italic">these</span> choices.</h3></div>
+        <div class="block-body">
+          <p>Observation showed me <em>what</em> people did, not why. Three 20-minute interviews with third-year students let me follow up on the exact behaviors I'd seen — the folder-as-umbrella, the hood left down, the shared umbrella.</p>
+          <p><strong>Refined question:</strong> How can we make rain protection on campus more accessible and convenient, so students can move more comfortably in rainy conditions?</p>
+          <div class="finding">
+            <div class="finding-num">01</div>
+            <div>
+              <h4>Unsafe, inefficient infrastructure</h4>
+              <p>All three participants independently named Red Square, brick pathways, grates, and Drumheller Fountain's mist as the worst spots — and all three described slowing down or rerouting to avoid slipping.</p>
+              <blockquote class="quote">"[Red Square is] not built for the weather conditions Seattle has."<cite>P1</cite></blockquote>
+            </div>
+          </div>
+          <div class="finding">
+            <div class="finding-num">02</div>
+            <div>
+              <h4>Preparedness is about convenience, style, and norms — not lack of gear</h4>
+              <p>Everyone had some form of protection but was underprepared at least some of the time. Umbrellas felt inconvenient, didn't match an outfit, or carried a stigma of "not being local."</p>
+              <blockquote class="quote">"It depends on my outfit of the day… it's just vibes, with the vibes."<cite>P3, on choosing a rain jacket</cite></blockquote>
+            </div>
+          </div>
+          <div class="finding">
+            <div class="finding-num">03</div>
+            <div>
+              <h4>Rain disrupts social experience — in different directions</h4>
+              <p>One participant found company more stressful in the rain; the other two found it a relief.</p>
+              <blockquote class="quote">"[Sharing an umbrella is] cozy and fun. It's a human interaction."<cite>P3</cite></blockquote>
+            </div>
+          </div>
+          <p>I coded the interview transcripts into four thematic maps, pulling design opportunities from participants' own words.</p>
+          <div class="fig-grid fig-grid-2 fit-169">
+            <figure class="fig"><img src="images/rain-thematic-environment.webp" alt="Thematic map: environmental and safety factors, including slippery surfaces, infrastructure issues, difficult locations and preferred areas" loading="lazy"><figcaption>Environmental &amp; safety factors</figcaption></figure>
+            <figure class="fig"><img src="images/rain-thematic-preparedness.webp" alt="Thematic map: preparedness and adaptation, including emotional responses, coping habits and behavioral adaptation" loading="lazy"><figcaption>Preparedness &amp; adaptation</figcaption></figure>
+            <figure class="fig"><img src="images/rain-thematic-social.webp" alt="Thematic map: social and cultural influence, including group experience, social interaction, sharing rain gear and cultural perception of umbrellas" loading="lazy"><figcaption>Social &amp; cultural influence</figcaption></figure>
+            <figure class="fig"><img src="images/rain-thematic-solutions.webp" alt="Thematic map: design and solution opportunities, including infrastructure, communal resources, product solutions and user preferences" loading="lazy"><figcaption>Design &amp; solution opportunities</figcaption></figure>
+          </div>
+          <p class="fine-print">Click any map to enlarge.</p>
+        </div>
+      </div>
+
+      <div class="pullquote-block">
+        <p class="pullquote">I never use an umbrella because… it's <em>not normalized</em> here… [I wish I could carry one] without seeming weird.</p>
+        <div class="pullquote-attr">— Interview participant P2</div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">05 / Survey<h3>Validating <span class="italic">at</span> scale.</h3></div>
+        <div class="block-body">
+          <p>Three interviews gave depth, not scale. A 12-question survey — multiple choice, Likert scales, ranking, and one open question — went to UW students who walk campus at least twice a week, recruited through Slack, Discord, social media, and in person around Red Square. <strong>17 students responded</strong> — directional signal, not statistical certainty.</p>
+
+          <h4 class="result-title">Result 1 — Students often hit unsafe surfaces, and Red Square is the pain point</h4>
+          <div class="chart-pair">
+            <div class="bar-chart"><div class="bar-title">Unsafe surface encounters (1 = never, 5 = very often)</div>
+<div class="bar-row"><span class="bar-label">1</span><span class="bar-track"><span class="bar-fill" style="width:0%"></span></span><span class="bar-val">0%</span></div>
+<div class="bar-row"><span class="bar-label">2</span><span class="bar-track"><span class="bar-fill" style="width:0%"></span></span><span class="bar-val">0%</span></div>
+<div class="bar-row"><span class="bar-label">3</span><span class="bar-track"><span class="bar-fill" style="width:50%"></span></span><span class="bar-val">23.5%</span></div>
+<div class="bar-row"><span class="bar-label">4</span><span class="bar-track"><span class="bar-fill" style="width:100%"></span></span><span class="bar-val">47.1%</span></div>
+<div class="bar-row"><span class="bar-label">5</span><span class="bar-track"><span class="bar-fill" style="width:62%"></span></span><span class="bar-val">29.4%</span></div>
+</div>
+            <div class="bar-chart"><div class="bar-title">Most difficult area to walk through</div>
+<div class="bar-row"><span class="bar-label">Red Square</span><span class="bar-track"><span class="bar-fill" style="width:100%"></span></span><span class="bar-val">64.7%</span></div>
+<div class="bar-row"><span class="bar-label">Slopes / hills</span><span class="bar-track"><span class="bar-fill" style="width:27%"></span></span><span class="bar-val">17.6%</span></div>
+<div class="bar-row"><span class="bar-label">The Quad</span><span class="bar-track"><span class="bar-fill" style="width:9%"></span></span><span class="bar-val">5.9%</span></div>
+<div class="bar-row"><span class="bar-label">All of the above</span><span class="bar-track"><span class="bar-fill" style="width:9%"></span></span><span class="bar-val">5.9%</span></div>
+<div class="bar-row"><span class="bar-label">None</span><span class="bar-track"><span class="bar-fill" style="width:9%"></span></span><span class="bar-val">5.9%</span></div>
+</div>
+          </div>
+          <p>Three-quarters of respondents hit unsafe surfaces fairly often, and nearly two-thirds named Red Square — the same location every earlier phase had flagged. It's a consistent, measurable safety gap, not a few vocal complaints.</p>
+
+          <h4 class="result-title">Result 2 — Students lean on minimal protection, and it isn't holding up</h4>
+          <div class="chart-pair">
+            <div class="bar-chart"><div class="bar-title">Rain protection typically used (count, select all)</div>
+<div class="bar-row"><span class="bar-label">Hoodie</span><span class="bar-track"><span class="bar-fill" style="width:100%"></span></span><span class="bar-val">12</span></div>
+<div class="bar-row"><span class="bar-label">Umbrella</span><span class="bar-track"><span class="bar-fill" style="width:75%"></span></span><span class="bar-val">9</span></div>
+<div class="bar-row"><span class="bar-label">Rain jacket</span><span class="bar-track"><span class="bar-fill" style="width:67%"></span></span><span class="bar-val">8</span></div>
+<div class="bar-row"><span class="bar-label">Nothing</span><span class="bar-track"><span class="bar-fill" style="width:50%"></span></span><span class="bar-val">6</span></div>
+<div class="bar-row"><span class="bar-label">Hat / cap</span><span class="bar-track"><span class="bar-fill" style="width:25%"></span></span><span class="bar-val">3</span></div>
+</div>
+            <div class="bar-chart"><div class="bar-title">Reasons for skipping rain gear (avg. rank, 1 = most influential)</div>
+<div class="bar-row"><span class="bar-label">Inconvenience</span><span class="bar-track"><span class="bar-fill" style="width:100%"></span></span><span class="bar-val">3.2</span></div>
+<div class="bar-row"><span class="bar-label">Forgetfulness</span><span class="bar-track"><span class="bar-fill" style="width:100%"></span></span><span class="bar-val">3.2</span></div>
+<div class="bar-row"><span class="bar-label">Umbrella stigma</span><span class="bar-track"><span class="bar-fill" style="width:85%"></span></span><span class="bar-val">3.9</span></div>
+<div class="bar-row"><span class="bar-label">Doesn’t match outfit</span><span class="bar-track"><span class="bar-fill" style="width:85%"></span></span><span class="bar-val">3.9</span></div>
+<div class="bar-row"><span class="bar-label">Didn’t check forecast</span><span class="bar-track"><span class="bar-fill" style="width:79%"></span></span><span class="bar-val">4.2</span></div>
+<div class="bar-row"><span class="bar-label">Unpredictable weather</span><span class="bar-track"><span class="bar-fill" style="width:71%"></span></span><span class="bar-val">4.6</span></div>
+<div class="bar-row"><span class="bar-label">Rain doesn’t bother me</span><span class="bar-track"><span class="bar-fill" style="width:65%"></span></span><span class="bar-val">4.9</span></div>
+</div>
+          </div>
+          <p>Hoodies — not waterproof — were the most common protection. And when students skip gear, convenience and forgetfulness drive it more than stigma or indifference. <em>It isn't an awareness problem; it's a friction problem.</em></p>
+
+          <h4 class="result-title">Result 3 — Real appetite for shared and structural solutions</h4>
+          <div class="chart-pair">
+            <div class="bar-chart"><div class="bar-title">Likelihood of using communal umbrellas (1–5)</div>
+<div class="bar-row"><span class="bar-label">1</span><span class="bar-track"><span class="bar-fill" style="width:17%"></span></span><span class="bar-val">5.9%</span></div>
+<div class="bar-row"><span class="bar-label">2</span><span class="bar-track"><span class="bar-fill" style="width:33%"></span></span><span class="bar-val">11.8%</span></div>
+<div class="bar-row"><span class="bar-label">3</span><span class="bar-track"><span class="bar-fill" style="width:50%"></span></span><span class="bar-val">17.6%</span></div>
+<div class="bar-row"><span class="bar-label">4</span><span class="bar-track"><span class="bar-fill" style="width:100%"></span></span><span class="bar-val">35.3%</span></div>
+<div class="bar-row"><span class="bar-label">5</span><span class="bar-track"><span class="bar-fill" style="width:83%"></span></span><span class="bar-val">29.4%</span></div>
+</div>
+            <div class="bar-chart"><div class="bar-title">Usefulness of expanded covered walkways (1–5)</div>
+<div class="bar-row"><span class="bar-label">1</span><span class="bar-track"><span class="bar-fill" style="width:0%"></span></span><span class="bar-val">0%</span></div>
+<div class="bar-row"><span class="bar-label">2</span><span class="bar-track"><span class="bar-fill" style="width:0%"></span></span><span class="bar-val">0%</span></div>
+<div class="bar-row"><span class="bar-label">3</span><span class="bar-track"><span class="bar-fill" style="width:33%"></span></span><span class="bar-val">17.6%</span></div>
+<div class="bar-row"><span class="bar-label">4</span><span class="bar-track"><span class="bar-fill" style="width:56%"></span></span><span class="bar-val">29.4%</span></div>
+<div class="bar-row"><span class="bar-label">5</span><span class="bar-track"><span class="bar-fill" style="width:100%"></span></span><span class="bar-val">52.9%</span></div>
+</div>
+          </div>
+          <p>Nearly two-thirds would likely use communal umbrellas, and over 80% rated covered walkways a 4 or 5 — <strong>with zero respondents calling them not useful.</strong></p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">06 / Recommendations<h3>Where the research <span class="italic">points.</span></h3></div>
+        <div class="block-body">
+          <p>The same three ideas surfaced independently at every phase — observed in the field, explained in interviews, and confirmed in the survey. That convergence is what makes them the priority.</p>
+          <div class="recs">
+            <div class="rec"><div class="rec-tag">Field · Interviews · Survey</div><h5>01 — Fix Red Square's surfaces first</h5><p>Improve traction and drainage on the brick paving, and add pathway lighting — the highest-confidence, safety-critical fix.</p></div>
+            <div class="rec"><div class="rec-tag">Field · Interviews · Survey</div><h5>02 — Pilot communal umbrellas</h5><p>Branded umbrella stations at building entrances address the convenience and stigma barriers — 65% said they'd likely use one.</p></div>
+            <div class="rec"><div class="rec-tag">Field · Interviews · Survey</div><h5>03 — Connect covered walkways</h5><p>Modular canopies linking Kane, Odegaard, and Suzzallo close the exposure gap — rated "extremely useful" by over half of respondents.</p></div>
+          </div>
+          <p style="margin-top:24px">A fourth idea — semi-sheltered social seating, so the pauses I observed under awnings have a better place to happen — came out of the interviews but wasn't tested in the survey. It's the natural next thing to validate.</p>
+          <figure class="fig"><img src="images/rain-canopy-sketch.webp" alt="Photo of Red Square from under the Odegaard awning with a hand-drawn purple canopy connecting to the Kane Hall awning" loading="lazy"><figcaption>Early sketch of a canopy connecting the Kane and Odegaard awnings — the idea that carried through to the final recommendations.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">07 / Reflection<h3>Checking <span class="italic">my own</span> assumptions.</h3></div>
+        <div class="block-body">
+          <p>Each phase caught something the previous one couldn't. The field study couldn't explain why a student would rather get soaked than carry an umbrella; the interviews couldn't tell me how common that reasoning was; and the survey couldn't have surfaced "umbrella stigma" as a concept if the interviews hadn't found it first.</p>
+          <p>As a Seattle native, I assumed people here just accept getting a little wet. The interviews complicated that — it's a mix of convenience, style, and a real social norm. Recognizing that bias early, and writing open-ended follow-ups instead of leading ones, kept me from just confirming what I already believed.</p>
+          <p>Next time I'd recruit a more varied pool — all three interviewees were the same age and year — and observe a wider range of rain intensity. The most unexpectedly fun part: nearly everyone had a specific, slightly embarrassing rain story ready to go.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 2: DUBCARE -->
+  <button class="project" onclick="toggleProject(this)">
+    <span class="project-num">№ 002</span>
+    <div>
+      <div class="project-title">Dub<span class="italic">care</span></div>
+      <div class="project-tags">
+        <span>Mobile App</span>
+        <span>Healthcare</span>
+        <span>HCDE 303</span>
+      </div>
+    </div>
+    <p class="project-desc">A team concept that helps UW students find in-network urgent care, see costs and wait times up front, and learn healthcare basics before they need them — taken from interviews to a high-fidelity prototype.</p>
+    <div class="project-right">
+      <span class="project-year">2025</span>
+      <span class="project-arrow">+</span>
+    </div>
+  </button>
+  <div class="case-study">
+    <div class="case-inner">
+      <div class="case-meta-bar">
+        <span>HCDE 303</span>
+        <span>20 weeks · Jan – May 2025</span>
+        <span>Team 8 SEAAK (4 members)</span>
+        <span>Mentor: Prof. Arpita B.</span>
+      </div>
+      <h2 class="case-headline">Dub<span class="italic">care.</span></h2>
+      <p class="case-subhead">A mobile and web solution that helps UW students seek urgent medical care for non-life-threatening illnesses or injuries — making the entire process of seeking care <em>informative, efficient, and comfortable</em>, while educating students about their insurance and the resources available to them.</p>
+
+      <figure class="fig phone-row">
+        <div class="phone-grid">
+          <img src="images/dubcare-screen-1.webp" alt="DubCare map screen with insurance filter, sort options and nearby clinic cards showing wait times" loading="lazy">
+          <img src="images/dubcare-screen-2.webp" alt="DubCare clinic detail screen for UW Ravenna showing accepted insurance, services, wait time and a join waitlist button" loading="lazy">
+          <img src="images/dubcare-screen-3.webp" alt="DubCare resources screen with the step-by-step urgent care guide, cost estimator and healthcare fundamentals" loading="lazy">
+          <img src="images/dubcare-screen-4.webp" alt="DubCare step-by-step urgent care guide listing five steps from deciding whether to go to after your visit" loading="lazy">
+        </div>
+        <figcaption>Final high-fidelity screens — clinic map, clinic details, resources, and the step-by-step urgent care guide.</figcaption>
+      </figure>
+
+      <div class="overview">
+        <div><h4>Course</h4><p>HCDE 303 — Foundations in Human Centered Design, core HCDE curriculum.</p></div>
+        <div><h4>Team</h4><p>Elle Yamamoto, Selena Liu, Annie Huang, Annie Lam.</p></div>
+        <div><h4>Tools</h4><p>Figma, FigJam — research synthesis through high-fidelity prototyping.</p></div>
+        <div><h4>Outcome</h4><p>High-fidelity prototype + onboarding module concept, reviewed by industry experts.</p></div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">01 / Research<h3>Three barriers, <span class="italic">one</span> system.</h3></div>
+        <div class="block-body">
+          <p>After researching UW students' experiences in navigating urgent care and insurance plans, three key barriers emerged that needed to be addressed:</p>
+          <div class="finding">
+            <div class="finding-num">01</div>
+            <div>
+              <h4>Insurance match-making is broken</h4>
+              <p>Students struggle to find the corresponding urgent care that <em>actually takes their insurance</em> — meaning the search itself becomes a barrier to care.</p>
+            </div>
+          </div>
+          <div class="finding">
+            <div class="finding-num">02</div>
+            <div>
+              <h4>Non-transparent bills & fees</h4>
+              <p>Costs and fees aren't disclosed until after the appointment, leaving students <em>blindsided by bills</em> they didn't know to expect.</p>
+            </div>
+          </div>
+          <div class="finding">
+            <div class="finding-num">03</div>
+            <div>
+              <h4>No reliable wait-time system</h4>
+              <p>Students can't manage their schedule around urgent care visits because there's <em>no accurate wait-time information</em> available.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">02 / Requirements<h3>What the design <span class="italic">had</span> to do.</h3></div>
+        <div class="block-body">
+          <div class="two-col">
+            <div>
+              <h5>Design Requirements</h5>
+              <ul>
+                <li>Inform the patient of costs <em>before</em> seeking care</li>
+                <li>Present medical information in one organized place</li>
+                <li>Filter urgent care locations by the patient's insurance</li>
+                <li>Guide patients on what to ask at the clinic</li>
+                <li>Allow patients to join a waitlist for appointments</li>
+              </ul>
+            </div>
+            <div>
+              <h5>Design Goals</h5>
+              <ul>
+                <li>Encourage preparedness before a medical need exists</li>
+                <li>Make healthcare information accessible <em>throughout</em> the care process</li>
+                <li>Educate students on where and how to seek help</li>
+                <li>Reduce cognitive load during high-stress decisions</li>
+                <li>Build healthcare literacy as a long-term outcome</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">03 / Personas<h3>Two students, <span class="italic">two</span> journeys.</h3></div>
+        <div class="block-body">
+          <p>Our group created two personas, <strong>Ella</strong> and <strong>Max</strong>, based on insights gathered from urgent care experience interviews. They captured distinct patterns: students who'd <em>recently transitioned away from parent-managed healthcare</em>, and students navigating an unfamiliar healthcare system on their own.</p>
+          <div class="fig-grid fig-grid-2">
+            <figure class="fig"><img src="images/dubcare-persona-ella.webp" alt="Persona card for Ella listing goals, pain points, needs and attitudes" loading="lazy"><figcaption>Persona — Ella</figcaption></figure>
+            <figure class="fig"><img src="images/dubcare-persona-max.webp" alt="Persona card for Max listing goals, pain points, needs and attitudes" loading="lazy"><figcaption>Persona — Max</figcaption></figure>
+          </div>
+          <p>We also built a <strong>user journey map</strong> following Max through his urgent care experience. The map traced not just the steps he took but the <em>emotional arc</em> alongside them — showing where design could intervene to lower stress, not just speed things up.</p>
+          <figure class="fig">
+            <img src="images/dubcare-journey-map.webp" alt="User journey map following Max through five stages: locating a clinic, communicating with the clinic, travel, and receiving treatment, with an emotion curve" loading="lazy">
+            <figcaption>User journey map — Max's stages, actions, and emotions while seeking urgent care. Click to enlarge.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">04 / Concepts<h3>Three storyboards, <span class="italic">one</span> winner.</h3></div>
+        <div class="block-body">
+          <p>We sketched three distinct concepts to address the pain points, then evaluated which had the most reach:</p>
+          <div class="recs">
+            <div class="rec"><div class="rec-tag">Concept A</div><h5>Husky ID QR Code</h5><p>A scannable code linked to the student's insurance and health profile — surfaces relevant info at the point of care.</p></div>
+            <div class="rec"><div class="rec-tag">Concept B</div><h5>Visual Urgent Care Map</h5><p>A map-based interface filtering clinics by insurance acceptance, distance, hours, and wait time.</p></div>
+            <div class="rec"><div class="rec-tag">Concept C → Chosen</div><h5>Comprehensive Website</h5><p>One platform combining clinic discovery, insurance education, cost transparency, and waitlist signup.</p></div>
+          </div>
+          <div class="fig-grid fig-grid-3">
+            <figure class="fig"><img src="images/dubcare-storyboard-qr.webp" alt="Storyboard: Max wakes with a migraine, scans the QR code on his Husky ID, follows a step-by-step guide and finds an in-network clinic" loading="lazy"><figcaption>A — Husky ID QR Code</figcaption></figure>
+            <figure class="fig"><img src="images/dubcare-storyboard-map.webp" alt="Storyboard: Max falls down stairs, checks his insurance card, finds in-network clinics sorted by distance and takes a taxi to the nearest one" loading="lazy"><figcaption>B — Visual Urgent Care Map</figcaption></figure>
+            <figure class="fig"><img src="images/dubcare-storyboard-website.webp" alt="Storyboard: Max burns his hand, enters his insurance on the website, sees the wait time, joins the waitlist online and arrives prepared" loading="lazy"><figcaption>C — Comprehensive Website</figcaption></figure>
+          </div>
+          <p style="margin-top: 24px;">After expert review with <strong>John Harris and Daan Lindhout</strong>, we made a key decision: combine all three concepts into <em>one cohesive solution</em>. The integrated product would include the visual urgent care map, the comprehensive website, the Husky ID code checklist — plus a new <strong>student onboarding process</strong> that prepares students <em>before</em> a medical emergency, walking them through insurance, common medical terms, and how to navigate urgent care.</p>
+        </div>
+      </div>
+
+      <div class="pullquote-block">
+        <p class="pullquote">[This project addresses a] very common problem that's much broader than the student population. Other user types could benefit greatly from this.</p>
+        <div class="pullquote-attr">— John Harris & Daan Lindhout, External Reviewers</div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">05 / Competitive analysis<h3>Learning from <span class="italic">existing</span> systems.</h3></div>
+        <div class="block-body">
+          <p>To understand the existing landscape, we analyzed four products that overlap with our problem space: <strong>UW Student Health Website</strong>, <strong>Regence BlueShield</strong>, the <strong>UW Insurance Handbook</strong>, and the <strong>Medicaid Website</strong>.</p>
+          <p>Strong patterns to borrow: clear layouts, effective icon use, translation features, simple language, cost estimation tools, and phone support pathways. Patterns to avoid: redundant links, dense unbroken text, missing alt text, poor mobile optimization, vague navigation, and unexplained abbreviations.</p>
+          <p>The gap in the market was clear — <em>none of the existing products combined urgent-care discovery with insurance literacy in a student-friendly format</em>. That's the space DubCare moved into.</p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">06 / Iteration<h3>Low → mid → <span class="italic">high</span> fidelity.</h3></div>
+        <div class="block-body">
+          <p><strong>Information architecture.</strong> We mapped content, features, and navigation flow before drawing any screens.</p>
+          <figure class="fig">
+            <img src="images/dubcare-ia.webp" alt="Information architecture chart showing DubCare's pages and navigation flow" loading="lazy">
+            <figcaption>Information architecture. Click to enlarge.</figcaption>
+          </figure>
+          <p><strong>Low-fidelity prototype.</strong> Built in Figma after expert feedback, this rough draft helped us feel out how features should be organized.</p>
+          <figure class="fig phone-row">
+            <div class="phone-grid phone-grid-5">
+              <img src="images/dubcare-lofi-1.webp" alt="Low-fi wireframe: map with clinic list" loading="lazy">
+              <img src="images/dubcare-lofi-2.webp" alt="Low-fi wireframe: clinic details" loading="lazy">
+              <img src="images/dubcare-lofi-3.webp" alt="Low-fi wireframe: urgent care guide steps" loading="lazy">
+              <img src="images/dubcare-lofi-4.webp" alt="Low-fi wireframe: join waitlist form" loading="lazy">
+              <img src="images/dubcare-lofi-5.webp" alt="Low-fi wireframe: learning modules" loading="lazy">
+            </div>
+            <figcaption>Low-fidelity wireframes.</figcaption>
+          </figure>
+          <p><strong>Mid-fidelity prototype.</strong> We introduced the DubCare brand, color, and real content.</p>
+          <figure class="fig phone-row">
+            <div class="phone-grid phone-grid-6">
+              <img src="images/dubcare-midfi-1.webp" alt="Mid-fi screen: clinic map" loading="lazy">
+              <img src="images/dubcare-midfi-2.webp" alt="Mid-fi screen: join the waitlist form" loading="lazy">
+              <img src="images/dubcare-midfi-3.webp" alt="Mid-fi screen: learning page with urgent care guide and modules" loading="lazy">
+              <img src="images/dubcare-midfi-4.webp" alt="Mid-fi screen: urgent care vs emergency room comparison" loading="lazy">
+              <img src="images/dubcare-midfi-5.webp" alt="Mid-fi screen: clinic details with reviews" loading="lazy">
+              <img src="images/dubcare-midfi-6.webp" alt="Mid-fi screen: step 2 of the guide, find a clinic" loading="lazy">
+            </div>
+            <figcaption>Mid-fidelity screens — tested with users before the final round.</figcaption>
+          </figure>
+          <p><strong>Mid-fidelity user testing surfaced clear directions:</strong></p>
+          <div class="two-col">
+            <div>
+              <h5>What testers liked</h5>
+              <ul>
+                <li>Minimal, clean design</li>
+                <li>Familiarity with existing map apps</li>
+                <li>Good use of color and space</li>
+                <li>Clarity of the layout</li>
+              </ul>
+            </div>
+            <div>
+              <h5>What needed fixing</h5>
+              <ul>
+                <li>"Best match" sorting with filter context</li>
+                <li>Public transit option on the map</li>
+                <li>ER vs. urgent care section more visible</li>
+                <li>Waitlist confirmation messaging</li>
+                <li>Clearer wait-time and hours display</li>
+                <li>Module labels caused confusion</li>
+                <li>Inconsistent module sizing</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">07 / Expert review<h3>The second <span class="italic">round.</span></h3></div>
+        <div class="block-body">
+          <p>John Harris reviewed our mid-fidelity prototype and praised the "simple, clean design… good use of space and color choice." But he also surfaced real issues:</p>
+          <p><strong>Information architecture</strong> — Critical ER vs. urgent care info was buried behind multiple taps; clinic-page hierarchy didn't match user-need priority.</p>
+          <p><strong>Interface</strong> — Purple/gold color overlap created confusion when applied to different button states; clinic comparison on map cards was difficult.</p>
+          <p><strong>Usability</strong> — The site's purpose wasn't immediately clear on first visit; learning modules didn't align well with the user journey.</p>
+          <p>Based on this feedback we refined the design system (typography, color themes), reduced information density on the landing and learning pages, visualized the Urgent Care vs. ER checklist, and organized components into a more systematic flow.</p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">08 / High-fidelity prototype<h3>Try it <span class="italic">yourself.</span></h3></div>
+        <div class="block-body">
+          <p>The final round refined the information architecture, reworked the resource page content, and finalized prototype interactions. The prototype below is live — <em>click through it</em> the way a student would when deciding where to get care.</p>
+          <figure class="embed">
+            <div class="embed-frame">
+              <iframe src="https://embed.figma.com/proto/X7dCHSL2WHxbdzStYihSZi/Team-8-HCDE-303-Prototype?node-id=922-2212&amp;p=f&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=922%3A1457&amp;starting-point-node-id=922%3A2212&amp;embed-host=share" title="DubCare high-fidelity Figma prototype" loading="lazy" allowfullscreen></iframe>
+            </div>
+            <figcaption>Interactive Figma prototype — use the fullscreen button in the corner for the best view.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">09 / Retrospective<h3>What 20 weeks <span class="italic">taught</span> us.</h3></div>
+        <div class="block-body">
+          <p>Over the course of the project we transformed an initial research question about urgent care accessibility into a functional high-fidelity prototype with room for future development. The most significant design challenge was balancing two needs in one IA: helping users <em>make informed decisions</em> while also <em>connecting them quickly to services</em>.</p>
+          <p>If we were starting again, we'd conduct deeper research on the pain points within the urgent care process itself, and dig further into <strong>levels of student healthcare literacy</strong> to better inform the educational portion of the design.</p>
+          <p>The most rewarding aspect was seeing how our solution has potential to address a real need in the student community — and how each team member's strengths, from research to visual design, compounded over the 20 weeks to take DubCare from a question to a working prototype.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 3: MERCER ISLAND -->
+  <button class="project" onclick="toggleProject(this)">
+    <span class="project-num">№ 003</span>
+    <div>
+      <div class="project-title">Mercer Island <span class="italic">capital</span></div>
+      <div class="project-tags">
+        <span>Website Redesign</span>
+        <span>UX/UI Internship</span>
+        <span>WordPress / Divi</span>
+      </div>
+    </div>
+    <p class="project-desc">Complete rebuild of a financial advisory website to fix navigation, hierarchy, and broken flows. Restructured content architecture and aligned design with marketing, legal, and compliance — boosting clarity and prospective-client trust.</p>
+    <div class="project-right">
+      <span class="project-year">2025</span>
+      <span class="project-arrow">+</span>
+    </div>
+  </button>
+  <div class="case-study">
+    <div class="case-inner">
+      <div class="case-meta-bar">
+        <span>UX/UI Internship</span>
+        <span>March — June 2025</span>
+        <span>Mercer Island Capital</span>
+        <span>Tools: Framer · Divi · Ghost · Figma</span>
+      </div>
+      <h2 class="case-headline">Trust, <span class="italic">rebuilt.</span></h2>
+      <p class="case-subhead">A redesigned financial advisory website for Mercer Island Capital — a brand focused on long-term investing and wealth education. The original site lacked strong hierarchy and didn't fully reflect the credibility expected of a financial firm. I redesigned it to create a <em>modern, trustworthy, and conversion-friendly</em> user experience.</p>
+
+      <div class="fig-grid fig-grid-2 crop-1610">
+        <figure class="fig"><img src="images/mercer-before.webp" alt="Original Mercer Island Capital homepage with a lake photo and the headline Investing for your future? We are here to help" loading="lazy"><figcaption>Before — the original homepage.</figcaption></figure>
+        <figure class="fig"><img src="images/mercer-after.webp" alt="Redesigned Mercer Island Capital homepage with a sunset lake photo, the headline Precision-Crafted Wealth Management and a Schedule a consultation button" loading="lazy"><figcaption>After — the redesigned homepage.</figcaption></figure>
+      </div>
+
+      <div class="overview">
+        <div><h4>Role</h4><p>UX/UI Design Intern — audit, research, IA, wireframing, visual design, full rebuild.</p></div>
+        <div><h4>Timeline</h4><p>March – June 2025 (four months).</p></div>
+        <div><h4>Tools</h4><p>Framer, Divi, Ghost, Figma, WordPress.</p></div>
+        <div><h4>Outcome</h4><p>Site rebuilt from scratch — stronger hierarchy, clearer CTAs, scalable foundation.</p></div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">01 / Overview<h3>A financial brand <span class="italic">in need</span> of trust signals.</h3></div>
+        <div class="block-body">
+          <p>Mercer Island Capital is a financial insights brand focused on long-term investing and wealth education. The original website lacked strong hierarchy and didn't fully reflect the <em>credibility expected of a financial firm</em>.</p>
+          <p>I was brought in as the UX/UI Design Intern to redesign the site — creating a modern, trustworthy, and conversion-friendly experience that matched the firm's positioning.</p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">02 / The problem<h3>Five issues <span class="italic">compounding</span> against trust.</h3></div>
+        <div class="block-body">
+          <p>The original site had several UX issues that limited clarity and trust:</p>
+          <div class="two-col">
+            <div>
+              <h5>Visual & layout problems</h5>
+              <ul>
+                <li>Weak visual hierarchy — content was hard to scan</li>
+                <li>Inconsistent spacing reduced professionalism</li>
+                <li>Text-heavy sections lacked rhythm and structure</li>
+                <li>Design didn't match financial-services expectations</li>
+              </ul>
+            </div>
+            <div>
+              <h5>Conversion problems</h5>
+              <ul>
+                <li>No strong CTA to guide users toward conversion</li>
+                <li>Unclear next-step pathways for prospective clients</li>
+                <li>Backend (Divi) made even small changes difficult</li>
+                <li>Friction compounded user uncertainty</li>
+              </ul>
+            </div>
+          </div>
+          <p style="margin-top: 24px;">Together, these problems created friction and reduced user confidence in the brand — exactly the opposite of what a wealth-management firm needs.</p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">03 / Goals<h3>Three goals, <span class="italic">one</span> direction.</h3></div>
+        <div class="block-body">
+          <div class="recs">
+            <div class="rec"><div class="rec-tag">Goal 01</div><h5>Improve clarity</h5><p>Strengthen visual hierarchy, spacing, and overall readability so users can scan and understand quickly.</p></div>
+            <div class="rec"><div class="rec-tag">Goal 02</div><h5>Build client trust</h5><p>Create a more professional design aligned with top financial institutions — visual credibility as a baseline.</p></div>
+            <div class="rec"><div class="rec-tag">Goal 03</div><h5>Increase conversion</h5><p>Add clearer CTAs and structured guidance to support user action and move prospective clients forward.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">04 / Audit + competitive analysis<h3>Learning from <span class="italic">the</span> leaders.</h3></div>
+        <div class="block-body">
+          <p>I began by reviewing the structure of the original website, which was built in WordPress using the Divi theme. The backend was <em>overly complex and made even small layout changes difficult</em> — which revealed deeper issues with hierarchy, spacing, readability, and content flow.</p>
+          <p>To better understand user expectations for financial brands, I examined leading wealth-management websites — <strong>JP Morgan, Millennial Wealth, and Independent Financial Partners</strong>. Five trust-building patterns emerged consistently across all three:</p>
+          <div class="two-col">
+            <div>
+              <h5>What top firms do</h5>
+              <ul>
+                <li>Clear hero messaging</li>
+                <li>Strong spacing and hierarchy</li>
+                <li>Professional typography</li>
+                <li>Clean, scannable sections</li>
+                <li>Prominent CTAs ("Get Started," "Talk to an Advisor")</li>
+              </ul>
+            </div>
+            <div>
+              <h5>What this told me</h5>
+              <ul>
+                <li>Trust is signaled by <em>restraint</em>, not richness</li>
+                <li>Whitespace is part of the message</li>
+                <li>Typography choices alone can shift credibility</li>
+                <li>CTAs need to feel inevitable, not desperate</li>
+                <li>Information density should taper, not surge</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">05 / Prototyping & tool exploration<h3>Try four tools, <span class="italic">pick</span> the right one.</h3></div>
+        <div class="block-body">
+          <p>Before committing to a rebuild, I explored multiple approaches to find the best platform and workflow:</p>
+          <div class="finding">
+            <div class="finding-num">01</div>
+            <div>
+              <h4>Ghost.io experiment</h4>
+              <p>Tried Ghost to evaluate a simpler publishing system — promising for content-first sites, but limited for the structured layout the firm needed.</p>
+            </div>
+          </div>
+          <div class="finding">
+            <div class="finding-num">02</div>
+            <div>
+              <h4>Figma wireframes</h4>
+              <p>Built initial wireframes in Figma to test layout structure and section flow — useful for stakeholder review before any code or theme decisions.</p>
+            </div>
+          </div>
+          <div class="finding">
+            <div class="finding-num">03</div>
+            <div>
+              <h4>Hand-coded layouts</h4>
+              <p>Tested custom HTML/CSS layouts to evaluate full customization — clarified what was possible outside a page-builder's constraints.</p>
+            </div>
+          </div>
+          <div class="finding">
+            <div class="finding-num">04</div>
+            <div>
+              <h4>Tool comparison</h4>
+              <p>Compared how different tools handled <em>responsiveness, spacing, and flexibility</em> — the three dimensions where the original Divi build had failed.</p>
+            </div>
+          </div>
+          <p style="margin-top: 24px;">These experiments clarified the technical and design limitations of the original build — and gave me the evidence to argue for a full rebuild rather than incremental patches.</p>
+          <div class="fig-grid fig-grid-2 crop-45"><figure class="fig fig-tall"><img src="images/mercer-wire-1.webp" alt="Long wireframe iteration of the homepage with services, about and values sections" loading="lazy"><figcaption>Homepage wireframe iteration.</figcaption></figure><figure class="fig"><img src="images/mercer-wire-3.webp" alt="Contact page iteration with a Connect With Us form and green footer" loading="lazy"><figcaption>Contact page iteration.</figcaption></figure></div>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">06 / Rebuild<h3>From scratch, <span class="italic">on</span> purpose.</h3></div>
+        <div class="block-body">
+          <p>After evaluating all alternatives, I decided to <strong>rebuild the entire website from scratch using WordPress</strong> rather than modifying the existing Divi structure. Starting fresh allowed me to:</p>
+          <div class="recs">
+            <div class="rec"><div class="rec-tag">Identity</div><h5>Strong visual identity</h5><p>Establish a professional, financial-industry tone from the foundation rather than retrofitting it.</p></div>
+            <div class="rec"><div class="rec-tag">Hierarchy</div><h5>Modern, clean hierarchy</h5><p>Build the IA around what users want to know in the order they want to know it.</p></div>
+            <div class="rec"><div class="rec-tag">Whitespace</div><h5>Improved spacing & readability</h5><p>Give every section breathing room — density was costing the brand credibility.</p></div>
+            <div class="rec"><div class="rec-tag">CTAs</div><h5>Clearer CTAs for conversion</h5><p>Add prominent, well-placed calls-to-action that move prospects forward without pressure.</p></div>
+            <div class="rec"><div class="rec-tag">Navigation</div><h5>Enhanced navigation & flow</h5><p>Restructure the menu and page flow so visitors never feel lost or stuck.</p></div>
+            <div class="rec"><div class="rec-tag">Responsive</div><h5>Cross-device responsiveness</h5><p>Ensure the experience holds up on mobile — increasingly where first impressions happen.</p></div>
+          </div>
+          <p style="margin-top: 24px;">The full rebuild resulted in a more <em>credible, scalable, and trustworthy</em> website for a financial-services brand — and one that's easier to maintain long-term.</p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">07 / Visual system<h3>A system <span class="italic">that</span> signals trust.</h3></div>
+        <div class="block-body">
+          <p>With a clean foundation, I developed a consistent visual system focused on trust and clarity:</p>
+          <div class="two-col">
+            <div>
+              <h5>Visual decisions</h5>
+              <ul>
+                <li>Blue–green–gray financial palette</li>
+                <li>Professional typography scale</li>
+                <li>Structured content rhythm</li>
+                <li>Sections with visual breathing room</li>
+                <li>Modern button and CTA styling</li>
+              </ul>
+            </div>
+            <div>
+              <h5>Why these choices</h5>
+              <ul>
+                <li>Blue/green = financial-industry visual shorthand for stability</li>
+                <li>Typography scale = legibility at every level</li>
+                <li>Rhythm = makes long pages feel intentional</li>
+                <li>Breathing room = signals confidence</li>
+                <li>CTAs = invite action without demanding it</li>
+              </ul>
+            </div>
+          </div>
+          <figure class="fig fig-tall"><img src="images/mercer-full-site.webp" alt="Full-length screenshot of the final Mercer Island Capital website" loading="lazy"><figcaption>The final site, top to bottom. Click to enlarge.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">08 / Outcome<h3>Key improvements <span class="italic">that</span> shipped.</h3></div>
+        <div class="block-body">
+          <p>The redesign of Mercer Island Capital significantly improved usability, clarity, and credibility. Key improvements include:</p>
+          <div class="finding">
+            <div class="finding-num">01</div>
+            <div>
+              <h4>Stronger visual hierarchy</h4>
+              <p>Easier scanning and readability — important content surfaces first, supporting content sits underneath.</p>
+            </div>
+          </div>
+          <div class="finding">
+            <div class="finding-num">02</div>
+            <div>
+              <h4>Professional financial-industry aesthetic</h4>
+              <p>The site now reads as a peer to the larger firms it competes with — visual credibility as a baseline.</p>
+            </div>
+          </div>
+          <div class="finding">
+            <div class="finding-num">03</div>
+            <div>
+              <h4>Clear CTA structure</h4>
+              <p>Conversion pathways are visible without being aggressive — prospective clients always know the next step.</p>
+            </div>
+          </div>
+          <div class="finding">
+            <div class="finding-num">04</div>
+            <div>
+              <h4>Improved mobile responsiveness</h4>
+              <p>The mobile experience now matches desktop in clarity — critical because mobile is where most first impressions form.</p>
+            </div>
+          </div>
+          <div class="finding">
+            <div class="finding-num">05</div>
+            <div>
+              <h4>Simplified navigation & content flow</h4>
+              <p>Fewer dead ends, clearer paths, and a content order that matches how prospective clients actually evaluate firms.</p>
+            </div>
+          </div>
+          <div class="finding">
+            <div class="finding-num">06</div>
+            <div>
+              <h4>More trustworthy first impression</h4>
+              <p>Every choice — typography, spacing, palette, hierarchy — contributes to a more reliable, professional first read.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">09 / Expected impact<h3>A foundation for <span class="italic">what's</span> next.</h3></div>
+        <div class="block-body">
+          <p>The redesigned Mercer Island Capital website is expected to improve <strong>user trust, engagement, and conversion</strong> through clearer CTAs and a more intuitive layout. The refreshed visual system and simplified navigation better reflect the professionalism of a financial-services brand, helping visitors understand the value faster and navigate with confidence.</p>
+          <p>Overall, the redesign provides a <em>stronger foundation for future content, growth, and long-term brand credibility</em> — and a website that's now easier for the team to maintain as the firm scales.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 4: LEMAY -->
+  <button class="project" onclick="toggleProject(this)">
+    <span class="project-num">№ 004</span>
+    <div>
+      <div class="project-title">LeMay <span class="italic">car museum</span></div>
+      <div class="project-tags">
+        <span>Brand Identity</span>
+        <span>Team of 2</span>
+        <span>HCDE 308</span>
+      </div>
+    </div>
+    <p class="project-desc">An identity redesign for America's Car Museum in Tacoma — from field research and mood boards to a finished logo, color and type system, a homepage redesign, and a print suite.</p>
+    <div class="project-right">
+      <span class="project-year">2026</span>
+      <span class="project-arrow">+</span>
+    </div>
+  </button>
+  <div class="case-study">
+    <div class="case-inner">
+      <div class="case-meta-bar">
+        <span>HCDE 308 — Visual Communication Design</span>
+        <span>Spring 2026</span>
+        <span>Annie Lam &amp; Johnny Ju</span>
+        <span>Brand identity</span>
+      </div>
+      <h2 class="case-headline">Rolling <span class="italic">sculptures.</span></h2>
+      <p class="case-subhead">Reimagining the visual identity of LeMay — America's Car Museum, a nonprofit in Tacoma — to keep the classic-car feeling while making the system <em>cleaner, easier to scan, and more welcoming</em> to first-time visitors.</p>
+
+      <figure class="fig fig-poster"><img src="images/lemay-poster.webp" alt="Drive Through History exhibition poster for LeMay America's Car Museum, with a Didot headline, the final logo and a classic car photo" loading="lazy"><figcaption>"Drive Through History" special exhibition poster — the final identity in print.</figcaption></figure>
+
+      <div class="overview">
+        <div><h4>Client</h4><p>LeMay — America's Car Museum (class project).</p></div>
+        <div><h4>Team</h4><p>Annie Lam &amp; Johnny Ju.</p></div>
+        <div><h4>My role</h4><p>Research, color and mood board direction, homepage redesign, print system.</p></div>
+        <div><h4>Output</h4><p>Logo, color and type system, homepage redesign, poster and stationery.</p></div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">01 / The organization<h3>Strong in person, <span class="italic">weaker</span> online.</h3></div>
+        <div class="block-body">
+          <p>LeMay's mission is to preserve and celebrate the automobile's influence on American culture — presenting cars as historical artifacts and design objects. On its own site, the museum calls cars <em>"rolling sculptures,"</em> which became a clue for how the brand wants to be read.</p>
+          <p>It serves four overlapping audiences: enthusiasts and collectors, families and tourists, students and schools, and donors and sponsors who need the brand to read as credible, not just fun.</p>
+          <p>My starting critique: the identity works on the physical building — chrome details, a wing-shaped mark, bold signage — but feels heavy and dated online, where the logo, buttons, photos, and text compete for attention and tickets, events, and education have no clear hierarchy.</p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">02 / Context<h3>Learning from <span class="italic">three</span> references.</h3></div>
+        <div class="block-body">
+          <div class="recs">
+            <div class="rec"><div class="rec-tag">Audience parallel</div><h5>Museum of Flight</h5><p>Serves families, tourists, and STEM visitors — connecting transportation, engineering, and public learning.</p></div>
+            <div class="rec"><div class="rec-tag">Tone reference</div><h5>Petersen Automotive Museum</h5><p>Shows an automotive museum can feel bold, premium, and contemporary without losing car-culture excitement.</p></div>
+            <div class="rec"><div class="rec-tag">"What we are not"</div><h5>LeMay Collections at Marymount</h5><p>A related but more intimate, collection-centered brand — a useful contrast.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">03 / Design intent<h3>Heritage, clarity, <span class="italic">welcome.</span></h3></div>
+        <div class="block-body">
+          <p><strong>Heritage &amp; motion</strong> — a timeless museum voice in a system that still feels like it's going somewhere. <strong>Clarity</strong> — structured grids so tickets, hours, and membership are easy to scan. <strong>Premium, but welcoming</strong> — refined enough for donors, approachable enough for a family buying tickets on a phone.</p>
+          <p>I built the mood board and wrote its rationale, pulling references that mapped to those attributes rather than generic "car" imagery: vintage gauges and chrome for heritage, the Petersen's curved architecture and a curving road for motion, and museum wayfinding systems for clarity.</p>
+          <figure class="fig"><img src="images/lemay-design-intent.webp" alt="Design intent slide listing four attributes — classic, movement and energy, clarity, premium and welcoming — beside the LeMay building, the Petersen Museum exterior and the final logo" loading="lazy"><figcaption>Design intent — each attribute tied to a visual decision.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">04 / The mark<h3>Two rounds of <span class="italic">critique.</span></h3></div>
+        <div class="block-body">
+          <p>Round one explored six directions — wheel and road marks, a speedometer, an ACM lettermark, a shield emblem — to see which ideas read as "museum" rather than "dealership" or "race team." Johnny led those concepts while I ran the mood board, color, and wordmark direction.</p>
+          <div class="two-col">
+            <div>
+              <h5>Round one feedback</h5>
+              <ul>
+                <li>Classic serif for "LeMay" tested best — museum-like</li>
+                <li>Wheel-and-road concepts felt too literal</li>
+                <li>"ACM" plus the full name was redundant</li>
+                <li>The palette needed simplifying and more contrast</li>
+              </ul>
+            </div>
+            <div>
+              <h5>Round two refinements</h5>
+              <ul>
+                <li>Road element changed to steel gray for balance</li>
+                <li>Roofline arch matched to LeMay's real building</li>
+                <li>Stronger three-column homepage grid</li>
+                <li>Membership callout moved higher on the page</li>
+              </ul>
+            </div>
+          </div>
+          <p>The final mark combines the arched museum roofline and a car silhouette, with a Didot "LeMay" wordmark and an Avenir "America's Car Museum" descriptor in Artifact Red.</p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">05 / Identity system<h3>Color <span class="italic">and</span> type.</h3></div>
+        <div class="block-body">
+          <p>A four-color system built around the museum's existing red, made more precise, with a warm neutral background instead of pure white — keeping it feeling like a museum, not a checkout page.</p>
+          <figure class="fig"><img src="images/lemay-logo-palette.webp" alt="Color palette slide with Artifact Red, Charcoal Black, Warm White and Steel Gray swatches with hex, RGB and CMYK values, and three logo lockups" loading="lazy"><figcaption>Color palette and logo lockups. Click to enlarge.</figcaption></figure>
+          <figure class="fig"><img src="images/lemay-typography.webp" alt="Typography slide showing Didot for titles and headings and Avenir for body text, with weights and rationale" loading="lazy"><figcaption>Typography — Didot for headings, Avenir for body and interface.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">06 / Digital artifact<h3>The homepage, <span class="italic">rebuilt.</span></h3></div>
+        <div class="block-body">
+          <p>I applied the system to a real homepage rather than a floating mockup, shown next to the current site.</p>
+          <figure class="fig"><img src="images/lemay-digital-compare.webp" alt="Side-by-side comparison of the current americascarmuseum.org homepage and the redesigned LeMay homepage" loading="lazy"><figcaption>Current site (left) vs. redesign (right).</figcaption></figure>
+          <div class="finding"><div class="finding-num">01</div><div><h4>One hero, one headline</h4><p>Stacked marketing banners replaced by a single Didot headline — "Preserving the stories that move America" — with clear primary and secondary calls to action.</p></div></div>
+          <div class="finding"><div class="finding-num">02</div><div><h4>Information bar</h4><p>Hours, location, and the next event surfaced right below the fold instead of buried in navigation.</p></div></div>
+          <div class="finding"><div class="finding-num">03</div><div><h4>Membership moved up</h4><p>A core revenue path for a nonprofit museum, raised higher on the page after class feedback.</p></div></div>
+          <div class="finding"><div class="finding-num">04</div><div><h4>Three-column structure</h4><p>Exhibitions, plan-your-visit, and education content in one consistent grid, so the page reads as a system.</p></div></div>
+          <figure class="fig fig-tall"><img src="images/lemay-homepage.webp" alt="Full-page view of the redesigned LeMay homepage with hero, information bar, current exhibitions, plan your visit, membership banner and upcoming events" loading="lazy"><figcaption>The full redesigned homepage. Click to enlarge.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">07 / Analog artifact<h3>Off <span class="italic">the</span> screen.</h3></div>
+        <div class="block-body">
+          <p>To test the identity in print, I designed a <strong>"Drive Through History" exhibition poster</strong> and a <strong>stationery suite</strong> — letterhead, envelope, and business card on warm white stock, with a red-lined envelope flap carrying the mark. Johnny applied the same system to a visitor pass and membership card.</p>
+          <figure class="fig"><img src="images/lemay-poster-iterations.webp" alt="Two versions of the Drive Through History poster side by side: first iteration and final with the updated logo" loading="lazy"><figcaption>Poster — first iteration vs. final, updated with the finished logo.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">08 / Reflection<h3>Critique as <span class="italic">direction.</span></h3></div>
+        <div class="block-body">
+          <p>The biggest shift in my process was treating critique as direction rather than something to defend against — the steel-gray road, the tighter grid, and the earlier membership placement all came from feedback I didn't originally think I needed.</p>
+          <p>Working with a partner meant dividing a brand system without fragmenting it. Johnny and I split the work but kept checking it against the same three attributes, so the final system reads as one voice, not two.</p>
+          <p class="fine-print">AI tools (ChatGPT) were used for first-round visual mockups and polishing written language. Final design decisions — the color system, homepage, and print artifacts — are my own.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 5: MOODTUNE -->
+  <button class="project" onclick="toggleProject(this)">
+    <span class="project-num">№ 005</span>
+    <div>
+      <div class="project-title">Mood<span class="italic">tune</span></div>
+      <div class="project-tags">
+        <span>Web App</span>
+        <span>Python / Flask</span>
+        <span>HCDE 310</span>
+      </div>
+    </div>
+    <p class="project-desc">A Flask web app that turns a sentence about how you feel into a playlist — an emotion model reads your mood, blends it into a music tag, and pulls matching tracks from Last.fm.</p>
+    <div class="project-right">
+      <span class="project-year">2025</span>
+      <span class="project-arrow">+</span>
+    </div>
+  </button>
+  <div class="case-study">
+    <div class="case-inner">
+      <div class="case-meta-bar">
+        <span>HCDE 310 — Interactive Systems Design &amp; Technology</span>
+        <span>Autumn 2025</span>
+        <span>Solo project</span>
+        <span>Concept, research, development</span>
+      </div>
+      <h2 class="case-headline">Tell it how you <span class="italic">feel.</span></h2>
+      <p class="case-subhead">Type something like <em>"I'm tired but hopeful"</em> and MoodTune runs it through an emotion-detection model, blends the emotions it finds into a music mood, and returns a matching set of tracks — with optional genre filters and a button to reshuffle.</p>
+
+      <div class="overview">
+        <div><h4>Role</h4><p>Solo — concept, research, development, and write-up.</p></div>
+        <div><h4>Stack</h4><p>Python, Flask, HTML/CSS, Hugging Face Inference API, Last.fm API.</p></div>
+        <div><h4>Model</h4><p>roberta-base-go_emotions — 28 emotion labels, not one flat sentiment.</p></div>
+        <div><h4>Code</h4><p><a class="inline-link" href="https://github.com/annielam2/MoodTune" target="_blank" rel="noopener">View on GitHub ↗</a></p></div>
+      </div>
+
+      <figure class="fig fig-hero">
+        <img src="images/moodtune-result.webp" alt="MoodTune result for the input 'stomach pain and fatigue': detected emotion sadness at 81.79 percent confidence, mapped to the Last.fm tag sad, with recommended songs listed below" loading="lazy">
+        <figcaption>A real run: "stomach pain and fatigue" read as 81.79% sadness, mapped to the "sad" tag, with the Pop genre filter on.</figcaption>
+      </figure>
+
+      <div class="case-block">
+        <div class="block-label">01 / Problem<h3>Music is sorted by genre, <span class="italic">not feeling.</span></h3></div>
+        <div class="block-body">
+          <p>Streaming platforms organize music by genre and artist, not by how the listener feels. Searching a mood on Spotify returns an auto-generated playlist that's hit-or-miss. For someone stressed, tired, or wound up, getting from a feeling to the right song usually means digging through old playlists or guessing.</p>
+          <p>MoodTune's premise: <strong>describe the feeling in your own words</strong>, and let a sentiment model and a mood-tagged music database do the matching.</p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">02 / Process<h3>Narrowing <span class="italic">the</span> scope.</h3></div>
+        <div class="block-body">
+          <p><strong>Sketching.</strong> Three concepts — a social fitness tracker, mood-based music, and a combined to-do/calendar/timer. Mood Music was the one I kept coming back to.</p>
+          <p><strong>First proposal.</strong> The Spotify Web API for playlists, a text-sentiment model, and a stretch goal of reading mood from a webcam with Azure's Face API — plus a dashboard with an emoji, a caption, and a mood-history graph.</p>
+          <p><strong>Revised proposal.</strong> I cut it down to one well-understood pipeline: Hugging Face's GoEmotions for emotion detection and Last.fm's tag API for music, served through Flask. Last.fm doesn't require OAuth the way Spotify's playlist endpoints do, which kept the project to one clear path — <em>text in, tagged tracks out</em>.</p>
+          <figure class="fig">
+            <img src="images/moodtune-home.webp" alt="MoodTune home screen with a text box reading I'm feeling, optional genre checkboxes, and a Generate Playlist button" loading="lazy">
+            <figcaption>The whole interface is one page: a mood description, optional genres, and a submit button.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">03 / How it works<h3>Four steps <span class="italic">behind</span> one box.</h3></div>
+        <div class="block-body">
+          <div class="finding"><div class="finding-num">01</div><div><h4>Input cleaning</h4><p>Genre words ("indie," "metal") and request phrasing ("I want," "give me") are stripped with regex, so "I want something upbeat and poppy" doesn't confuse the model with the word "pop."</p></div></div>
+          <div class="finding"><div class="finding-num">02</div><div><h4>Emotion detection</h4><p>The cleaned text goes to roberta-base-go_emotions, which scores it against 28 labels like joy, nervousness, grief, and admiration.</p></div></div>
+          <div class="finding"><div class="finding-num">03</div><div><h4>Weighted tag blending</h4><p>Instead of taking only the top emotion, every emotion above 0.15 confidence is summed into music-mood tags and normalized into percentages — so "stressed but hopeful" becomes a blend, not a coin flip.</p></div></div>
+          <div class="finding"><div class="finding-num">04</div><div><h4>Track retrieval</h4><p>The primary tag plus any genres goes to Last.fm, results are de-duplicated and sampled to ten tracks — which is what "Regenerate Playlist" re-runs without calling the model again.</p></div></div>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">04 / Trade-offs<h3>Small <span class="italic">decisions.</span></h3></div>
+        <div class="block-body">
+          <p><strong>Placeholder art over broken art.</strong> Last.fm's images were missing, mismatched, or oddly sized, so every song gets the same flat icon. Less flashy, but nothing looks wrong.</p>
+          <p><strong>Search links instead of a Spotify integration.</strong> Each track links to a Spotify search rather than building a playlist — avoiding a developer app and OAuth login just to resolve a song title.</p>
+          <p><strong>An honest edge case.</strong> "Stomach pain and fatigue" doesn't name a feeling, yet the model called it sadness with high confidence — sentiment models read tone and word association, not just emotion words. And with Pop checked, the list mixed "Hurt" by Johnny Cash with "Party in the U.S.A." — <em>the genre filter widened the pool instead of narrowing it.</em></p>
+          <table class="cmp-table">
+            <thead><tr><th>Feature</th><th>Proposed</th><th>Shipped</th></tr></thead>
+            <tbody>
+              <tr><td>Mood input</td><td>Text, or webcam (stretch)</td><td>Free-form text</td></tr>
+              <tr><td>Emotion detection</td><td>Hugging Face or OpenAI</td><td>GoEmotions, weighted blend</td></tr>
+              <tr><td>Music source</td><td>Spotify with OAuth</td><td>Last.fm tags; Spotify search links</td></tr>
+              <tr><td>Genre filters</td><td>Not proposed</td><td>Added</td></tr>
+              <tr><td>Regenerate</td><td>Not proposed</td><td>Added</td></tr>
+              <tr><td>Mood history, facial detection</td><td>Stretch goals</td><td>Cut</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">05 / Demo<h3>See it <span class="italic">run.</span></h3></div>
+        <div class="block-body">
+          <figure class="embed">
+            <div class="embed-frame embed-vertical">
+              <iframe src="https://www.youtube-nocookie.com/embed/FHYNy55kNps" title="MoodTune demo video" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
+            </div>
+            <figcaption>One-minute demo of MoodTune.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">06 / What I learned<h3>APIs fail <span class="italic">quietly.</span></h3></div>
+        <div class="block-body">
+          <p><strong>Tag coverage is uneven</strong> — some Last.fm tags return thousands of tracks, others almost none, so the vocabulary needed fallbacks. <strong>Rate limits are real</strong> once repeated testing starts. <strong>Sentiment has to be simplified to be searchable</strong>, which is where the weighted blend earned its keep. <strong>External APIs fail quietly</strong>, pushing the code toward defensive defaults. And <strong>a filter isn't automatically a filter</strong> — the next fix would intersect genre and mood instead of merging them.</p>
+          <p class="fine-print">Per the course's AI disclosure policy, the repository includes an ai.txt file: AI helped with the stylesheet, Flask/Jinja syntax checks, debugging, and the Hugging Face integration.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 6: LAUNDRY LIMITS -->
+  <button class="project" onclick="toggleProject(this)">
+    <span class="project-num">№ 006</span>
+    <div>
+      <div class="project-title">Laundry <span class="italic">limits</span></div>
+      <div class="project-tags">
+        <span>Physical Prototyping</span>
+        <span>Team of 3</span>
+        <span>HCDE 351</span>
+      </div>
+    </div>
+    <p class="project-desc">A guide and measuring-cup insert that help people pour the right amount of laundry detergent — taken from paper sketches to a laser-cut guide, a 3D-printed cup, and a behavioral test.</p>
+    <div class="project-right">
+      <span class="project-year">2026</span>
+      <span class="project-arrow">+</span>
+    </div>
+  </button>
+  <div class="case-study">
+    <div class="case-inner">
+      <div class="case-meta-bar">
+        <span>HCDE 351 — Final project</span>
+        <span>Winter 2026</span>
+        <span>Annie L., Taylor B., Maria N.</span>
+        <span>UN SDG #12 — Responsible Consumption</span>
+      </div>
+      <h2 class="case-headline">Know your <span class="italic">limits.</span></h2>
+      <p class="case-subhead">Many people waste water, cleaning resources, and money by guessing how much detergent to pour. Laundry Limits is a <em>simple, low-tech guidance system</em> — a visual guide that maps load size and soil level to the right amount, and a measuring-cup insert that shows where to stop.</p>
+
+      <figure class="fig fig-hero"><img src="images/proto-laundry-printed.webp" alt="Laser-cut cardboard guide matching soil level and load size to detergent amount, next to two green 3D-printed measuring cups" loading="lazy"><figcaption>The high-fidelity system: a laser-cut guide and 3D-printed measuring inserts.</figcaption></figure>
+
+      <div class="overview">
+        <div><h4>Team</h4><p>Annie Lam, Taylor B., and Maria N.</p></div>
+        <div><h4>Methods</h4><p>Paper prototypes, digital models, high-fidelity fabrication, behavioral prototype.</p></div>
+        <div><h4>Tools</h4><p>SolidWorks, laser cutter, 3D printer.</p></div>
+        <div><h4>Tested with</h4><p>Two participants, before-and-after detergent pours.</p></div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">01 / Goal<h3>Does guidance <span class="italic">change</span> the pour?</h3></div>
+        <div class="block-body">
+          <p>We wanted to know whether simple physical and visual tools could help people measure detergent more accurately — without new appliances or complex technology. Each of four prototyping methods tested a different part of the design: whether the guide <em>communicated</em> clearly, whether people could <em>use</em> it correctly, and whether it actually <em>reduced</em> overuse.</p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">02 / Process<h3>Four levels <span class="italic">of</span> fidelity.</h3></div>
+        <div class="block-body">
+          <div class="finding"><div class="finding-num">01</div><div><h4>Sketches &amp; paper</h4><p>Explored the guide's layout and how people would read the relationship between load size, soil level, and detergent amount — before spending time on fabrication.</p></div></div>
+          <div class="fig-grid fig-grid-2 fit-43">
+            <figure class="fig"><img src="images/proto-laundry-paper.webp" alt="Hand-drawn paper prototype of the guide with columns for soil level, load size and detergent amount" loading="lazy"><figcaption>Paper prototype of the guide.</figcaption></figure>
+            <figure class="fig"><img src="images/proto-laundry-digital.webp" alt="Digital models: the guide layout titled Know your limits, wash smarter, save more, and SolidWorks renders of the measuring cup insert" loading="lazy"><figcaption>Laser-print layout and SolidWorks cup models.</figcaption></figure>
+          </div>
+          <div class="finding"><div class="finding-num">02</div><div><h4>Digital models</h4><p>A SolidWorks model set the cup's dimensions, shape, and measurement levels; a 2D laser-print file refined the guide's type and visual structure.</p></div></div>
+          <div class="finding"><div class="finding-num">03</div><div><h4>High-fidelity prototypes</h4><p>The laser-cut guide and 3D-printed measuring tool let people interact with something close to a final product.</p></div></div>
+          <div class="finding"><div class="finding-num">04</div><div><h4>Behavioral prototype</h4><p>During testing, participants decided how much detergent to use with and without the system — so we could watch hesitation, confidence, and decision time across the whole workflow, not just the objects.</p></div></div>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">03 / Testing<h3>With and <span class="italic">without</span> the guide.</h3></div>
+        <div class="block-body">
+          <p>Two participants poured detergent for several load-size and soil-level scenarios — first with a plain, unmarked laundry-room cup, then with our guide and cup. We compared each pour to the correct amount, then asked four follow-up questions.</p>
+          <div class="finding"><div class="finding-num">01</div><div><h4>The problem was real</h4><p>With the unmarked cup, the first participant noticeably over-poured. The second came closer on intuition alone.</p></div></div>
+          <div class="finding"><div class="finding-num">02</div><div><h4>The system worked</h4><p>With the guide and cup, both found the right level for every scenario. Ease-of-use ratings were 8–8.5 and 7 out of 10, and both said they'd use it in their own laundry room.</p></div></div>
+          <div class="finding"><div class="finding-num">03</div><div><h4>Room to improve</h4><p>Color coding could tie the guide's recommendations more clearly to the cup's markings, and a larger, more varied group would surface issues two people can't.</p></div></div>
+          <figure class="embed">
+            <div class="embed-frame embed-16x9">
+              <iframe src="https://www.youtube-nocookie.com/embed/VQoSLLOZotU" title="Laundry Limits user testing video" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
+            </div>
+            <figcaption>User testing session.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">04 / Reflection<h3>Designing for <span class="italic">everyday</span> habits.</h3></div>
+        <div class="block-body">
+          <p>The idea seemed simple, but prototyping showed how much uncertainty, habit, and quick judgment live inside an everyday task. People understood and liked Laundry Limits, yet still hesitated when their laundry didn't fit neatly into one category. <em>Design isn't just giving people information — it's helping them feel confident deciding in real time.</em></p>
+          <p>Moving through fidelity levels mattered too. Sketches let us explore quickly, but watching people handle the 3D-printed cup and laser-cut guide communicated far more than explaining the idea ever could. Next, I'd refine the guide for in-between cases and test with more people.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 7: NIGHT MODE RITUAL -->
+  <button class="project" onclick="toggleProject(this)">
+    <span class="project-num">№ 007</span>
+    <div>
+      <div class="project-title">Night mode <span class="italic">ritual</span></div>
+      <div class="project-tags">
+        <span>Video Prototype</span>
+        <span>Environmental Design</span>
+        <span>HCDE 351</span>
+      </div>
+    </div>
+    <p class="project-desc">A two-minute video prototype that treats sleep as an environmental design problem — a single voice command that starts a coordinated sensory shutdown ritual.</p>
+    <div class="project-right">
+      <span class="project-year">2026</span>
+      <span class="project-arrow">+</span>
+    </div>
+  </button>
+  <div class="case-study">
+    <div class="case-inner">
+      <div class="case-meta-bar">
+        <span>HCDE 351 — UX Prototyping Techniques</span>
+        <span>Winter 2026</span>
+        <span>Solo project</span>
+        <span>120 seconds</span>
+      </div>
+      <h2 class="case-headline">A <span class="italic">softer</span> goodnight.</h2>
+      <p class="case-subhead">Reframing sleep not as an app problem, but as an environmental and behavioral one: being physically tired but mentally alert late at night. Instead of another tracking app, <em>Night Mode</em> is a coordinated sensory shutdown ritual.</p>
+
+      <div class="overview">
+        <div><h4>Role</h4><p>Solo — concept, storyboard, filming, acting, editing, testing.</p></div>
+        <div><h4>Format</h4><p>Landscape, live-action, first-person video, 120 seconds.</p></div>
+        <div><h4>Tools</h4><p>Alexa smart lighting, tripod, iMovie.</p></div>
+        <div><h4>Evaluated on</h4><p>Feasibility, usability, and desirability.</p></div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">01 / Concept<h3>One command, <span class="italic">five</span> cues.</h3></div>
+        <div class="block-body">
+          <p>"Alexa, start Night Mode" triggers a sequence: lights dim, the phone goes face down, a weighted blanket adds pressure, a sleep mask removes light, and three slow breaths close it out.</p>
+          <p>The hypothesis: coordinating these cues as <strong>a single ritual</strong>, rather than isolated habits, signals relaxation more effectively and shortens the time it takes to fall asleep. Rather than adding technology, I reframed two existing objects — a weighted blanket and a sleep mask — as parts of an intentional system.</p>
+          <figure class="embed">
+            <div class="embed-frame embed-16x9">
+              <iframe src="https://www.youtube-nocookie.com/embed/rdq0b2d9FxQ" title="Night Mode Ritual video prototype" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
+            </div>
+            <figcaption>The video prototype: restlessness → Night Mode → sensory reduction → calm → morning.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">02 / Process<h3>Designing around <span class="italic">real</span> limits.</h3></div>
+        <div class="block-body">
+          <p>I built a scene breakdown before filming — problem state, trigger moment, step-by-step shutdown, before and after, calm wake-up — so every interaction stayed visible within 120 seconds. I set the evaluation criteria first so the footage would actually answer my questions, not just demo the idea.</p>
+          <p>Filming alone shaped the production: a tripod for stable shots, and voiceover planned from the start to explain internal state without awkward on-camera narration. When no Alexa command matched "Night Mode" exactly, I spoke specific commands ("dim lights to 30%") and adjusted color by hand — a reminder that <em>video prototyping often means designing around what the technology can't quite do yet.</em></p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">03 / What viewers said<h3>Comforting, <span class="italic">but</span> fragile.</h3></div>
+        <div class="block-body">
+          <p>Participants watched the video and answered open-ended questions about what felt realistic, where they saw friction, and whether they'd try it.</p>
+          <div class="finding"><div class="finding-num">01</div><div><h4>Usability</h4><p>Everyone understood the sequence without explanation. Some asked whether it could be one automated trigger instead of several manual steps.</p></div></div>
+          <div class="finding"><div class="finding-num">02</div><div><h4>Feasibility</h4><p>Realistic <em>if</em> you already own the tools. The ritual doesn't travel — it breaks down on vacation or in an unfamiliar room.</p></div></div>
+          <div class="finding"><div class="finding-num">03</div><div><h4>Desirability</h4><p>Described as "easy to follow," "comforting," "realistic," and "relatable" — several said they'd try it themselves.</p></div></div>
+          <p>The lighting cue was the strongest moment; viewers read it as a signal to shut down without prompting. The biggest limitation was sustainability — environmental cues support a routine but don't guarantee it night after night.</p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">04 / Critique<h3>Intention <span class="italic">over</span> polish.</h3></div>
+        <div class="block-body">
+          <p>This was my first structured video prototype, and most hard problems were logistical. Editing in iMovie was new — layering voiceover was tricky, but holding shots slightly longer than felt natural improved the emotional pacing.</p>
+          <p>The bigger takeaway: a simple cue like dimming lights created a real emotional shift when it was framed clearly. Next time I'd add stronger sound design, test whether an automated lighting trigger feels more believable than my manual workaround, and bring a second person to cue effects.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 8: PHYSICAL PROTOTYPES -->
+  <button class="project" onclick="toggleProject(this)">
+    <span class="project-num">№ 008</span>
+    <div>
+      <div class="project-title">Physical <span class="italic">prototypes</span></div>
+      <div class="project-tags">
+        <span>Model</span>
+        <span>Sewing</span>
+        <span>Laser Cut</span>
+        <span>3D Print</span>
+      </div>
+    </div>
+    <p class="project-desc">Four hands-on prototypes from HCDE 351 — an electric screwdriver model, a sewn tote bag, a laser-cut phone stand, and a 3D-printed Red Bull lid I now use every day.</p>
+    <div class="project-right">
+      <span class="project-year">2026</span>
+      <span class="project-arrow">+</span>
+    </div>
+  </button>
+  <div class="case-study">
+    <div class="case-inner">
+      <div class="case-meta-bar">
+        <span>HCDE 351 — UX Prototyping Techniques</span>
+        <span>Winter 2026</span>
+        <span>4 prototypes</span>
+        <span>Documented on Medium</span>
+      </div>
+      <h2 class="case-headline">Hands-on <span class="italic">iteration.</span></h2>
+      <p class="case-subhead">Four weekly prototypes, each in a new fabrication method — and each one taken through <em>multiple iterations shaped by critique and real use.</em></p>
+
+      <div class="case-block">
+        <div class="block-label">01 / 3D print<h3>Red Bull <span class="italic">lid.</span></h3></div>
+        <div class="block-body">
+          <p>My favorite drink kept spilling when I traveled, so I modeled a snap-on lid in SolidWorks. I printed the first design at three sizes to find the tolerance — a 55 mm diameter with a concentric print pattern fit best — but it wasn't secure and liquid pooled on the rim.</p>
+          <p>For version two I removed the inner rim edge, added a tab to pull it off, and made it thinner for a tighter press fit. Testing showed PLA wasn't waterproof enough, so the final lid is printed in <strong>PETG</strong>, which is more water-resistant and flexible enough not to crack.</p>
+          <div class="fig-grid fig-grid-3 fit-square">
+            <figure class="fig"><img src="images/proto-redbull-sketch.webp" alt="Sketches of the Red Bull lid with cross-section, dimensions and notes on print pattern" loading="lazy"><figcaption>Sketches and dimensions.</figcaption></figure>
+            <figure class="fig"><img src="images/proto-redbull-cad.webp" alt="SolidWorks render of the second lid design with a pull tab" loading="lazy"><figcaption>Version two in SolidWorks, with a pull tab.</figcaption></figure>
+            <figure class="fig"><img src="images/proto-redbull-final.webp" alt="Final white PETG lid pressed onto a Red Bull can" loading="lazy"><figcaption>The final PETG lid.</figcaption></figure>
+          </div>
+          <p>Classmates said their Red Bulls spill too. I printed extras for friends — one stopped spills in her car's cup holder, another hiked with it in a backpack pocket. <em>I use mine every day.</em> Next, I'd emboss the Red Bull logo on top.</p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">02 / Laser cut<h3>Folding phone <span class="italic">stand.</span></h3></div>
+        <div class="block-body">
+          <p>My first time using a laser cutter: a phone stand for filming at different angles, cut from one sheet of cardboard, stored flat, with no fasteners. I sketched six ideas, mocked up my favorite in cardboard, and drew the cut file in Adobe Illustrator.</p>
+          <p>The breakthrough came at the gym — a bench's adjustment ladder folds flat and locks at angles, which was exactly what the back support needed. Living hinges with a brick pattern made the cardboard bend.</p>
+          <div class="fig-grid fig-grid-2 fit-43">
+            <figure class="fig"><img src="images/proto-laser-sketch.webp" alt="Grid-paper sketches of several phone stand concepts" loading="lazy"><figcaption>Concept sketches.</figcaption></figure>
+            <figure class="fig"><img src="images/proto-laser-hero.webp" alt="Three laser-cut cardboard phone stand iterations with ladder notches, next to a phone" loading="lazy"><figcaption>Three iterations, left to right.</figcaption></figure>
+          </div>
+          <p>Iteration one's 1 mm hinges were fragile; scaling up in iteration two made them sturdier but the wider lever stopped catching the notches; iteration three restored the lever but wobbled lower on the ladder. Critique pointed to thicker (not wider) notches and a confusing setup — peers tried to push the lever <em>through</em> the notch. They did like that it was all one piece: nothing to lose.</p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">03 / Sewing<h3>Bottle <span class="italic">tote.</span></h3></div>
+        <div class="block-body">
+          <p>A sewn container with a closing mechanism — muslin tote bags with snap buttons, and my first time sewing. I sketched five concepts and prototyped three.</p>
+          <figure class="fig fig-chart"><img src="images/proto-tote-sketch.webp" alt="Grid-paper sketches of tote bag shapes" loading="lazy"><figcaption>Concept sketches.</figcaption></figure>
+          <div class="fig-grid fig-grid-3"><figure class="fig"><img src="images/proto-tote-iter-1.webp" alt="First muslin tote: a crescent-shaped bag with long straps and a snap button" loading="lazy"><figcaption>Iteration 1 — crescent shape.</figcaption></figure><figure class="fig"><img src="images/proto-tote-iter-2.webp" alt="Second muslin tote: a narrow bag sized for a water bottle with short handles" loading="lazy"><figcaption>Iteration 2 — sized for a water bottle.</figcaption></figure><figure class="fig"><img src="images/proto-tote-iter-3.webp" alt="Third muslin tote: a square bag with longer, thinner handles and cleaner stitching" loading="lazy"><figcaption>Iteration 3 — square, with cleaner stitching.</figcaption></figure></div>
+          <p>Iteration one taught me to fold one long piece of fabric instead of piecing shapes — and that I'd sewn the straps inside out. Iteration two was sized around my water bottle with folded edges and shorter, stronger straps, though a reviewer noted a tall bottle would bump your hand. Iteration three moved to a square shape with longer handles and much cleaner stitching. Next: canvas fabric and a hidden button stitch.</p>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="block-label">04 / Model<h3>Electric <span class="italic">screwdriver.</span></h3></div>
+        <div class="block-body">
+          <p>I started by using my own electric screwdriver and power drill to understand how they feel and operate, then sketched three layouts and picked the most familiar one. I built it from paper, tape, and cardboard tubes — testing plastic, Play-Doh, and rocks before landing on a one-pound lead weight wrapped in foam to get the heft right.</p>
+          <div class="fig-grid fig-grid-2 fit-square">
+            <figure class="fig"><img src="images/proto-screwdriver-sketch.webp" alt="Three annotated sketch layouts of an electric screwdriver with button placements" loading="lazy"><figcaption>Three sketched layouts.</figcaption></figure>
+            <figure class="fig"><img src="images/proto-screwdriver-final.webp" alt="Hand holding the finished cylindrical screwdriver model with drawn-on buttons" loading="lazy"><figcaption>The finished model used for testing.</figcaption></figure>
+          </div>
+          <p>Testing exposed an orientation problem: the smooth cylinder made the trigger hard to find, and the round power button read like a screen control. Next iteration: labels, raised 3D buttons, a taller trigger than the speed buttons, and different base shapes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-inner">
+    <span>User Research</span>
+    <span>Field Studies</span>
+    <span><i class="italic">Prototyping</i></span>
+    <span>Interaction Design</span>
+    <span>Affinity Mapping</span>
+    <span><i class="italic">Usability Testing</i></span>
+    <span>Information Architecture</span>
+    <span>Systems Thinking</span>
+    <span>User Research</span>
+    <span>Field Studies</span>
+    <span><i class="italic">Prototyping</i></span>
+    <span>Interaction Design</span>
+    <span>Affinity Mapping</span>
+    <span><i class="italic">Usability Testing</i></span>
+    <span>Information Architecture</span>
+    <span>Systems Thinking</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">
+    <span class="num">02 / ABOUT</span>
+    <h2>Hi, <span class="italic">i'm</span> Annie.</h2>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a senior in the <strong>HCDE program at the University of Washington</strong>, graduating 2027 — six quarters on the Dean's List with a 3.57 GPA.</p>
+      <p>My interest in UX started with a small, nagging question: how do design choices — even tiny ones — <em>change the way someone experiences a product</em>? I experimented with psychology and engineering courses before realizing HCDE is the middle ground I'd been looking for. It lets me pair creativity with technical rigor while keeping the user at the center of every decision.</p>
+      <p>My internship at Mercer Island Capital made that conviction concrete. Designing a financial advisory website meant balancing client goals, legal constraints, and user needs at once — and I found I <em>loved</em> that pressure. The blend of problem-solving and artistry, making something that feels both beautiful and practical, is what pulls me back to this work.</p>
+      <p>I'm also shaped by things outside the classroom: traveling and noticing how different cultures approach systems and everyday objects, the music of John Summit, Tyler the Creator, and SZA — artists who prove originality lands hardest when it stays <em>relatable</em>. Same with design. The goal is to make complex interactions simpler and more meaningful — and the small things people never have to think about are usually the ones designed best.</p>
+    </div>
+
+    <aside class="about-side">
+      <div class="headshot-wrap">
+        <img src="images/annie-headshot.jpg" alt="Annie Lam" class="headshot">
+        <div class="headshot-caption">Annie Lam · Seattle, WA</div>
+      </div>
+
+      <h4>Education</h4>
+      <ul>
+        <li><span>University of Washington</span><span>2023 — 27</span></li>
+        <li><span>B.S. Human Centered Design</span><span>3.57 GPA</span></li>
+        <li><span>Dean's List</span><span>6 quarters</span></li>
+        <li><span>Annual Dean's List</span><span>2024 — 25</span></li>
+        <li><span>Shoreline CC (transfer)</span><span>2021 — 23</span></li>
+      </ul>
+
+      <h4>Relevant Coursework</h4>
+      <ul>
+        <li><span>Foundations of HCDE I & II</span><span>302 · 303</span></li>
+        <li><span>Intro to User Research</span><span>313</span></li>
+        <li><span>User Experience Prototyping</span><span>351</span></li>
+        <li><span>Interactive Systems Design</span><span>310</span></li>
+        <li><span>Inclusive Design Engineering</span><span>315</span></li>
+        <li><span>Information Visualization</span><span>411</span></li>
+        <li><span>Visual Comm. for HCDE</span><span>308</span></li>
+        <li><span>Human Data Interaction</span><span>410 ↗</span></li>
+        <li><span>Concepts in HCI</span><span>419 ↗</span></li>
+        <li><span>Physical Computing</span><span>439 ↗</span></li>
+      </ul>
+
+      <h4>Experience</h4>
+      <ul class="jobs">
+        <li class="job"><span class="job-main"><b>Warehouse Porter</b><small>Delaware North · Climate Pledge Arena</small></span><span>Aug 2026 — now</span></li>
+        <li class="job"><span class="job-main"><b>UX/UI Design Intern</b><small>Mercer Island Capital · Remote</small></span><span>Mar — Jun 2025</span></li>
+        <li class="job"><span class="job-main"><b>Barista</b><small>Xing Fu Tang · Seattle</small></span><span>Jun — Aug 2024</span></li>
+      </ul>
+
+      <h4>Research</h4>
+      <ul>
+        <li><span>Field Studies</span></li>
+        <li><span>User Interviews</span></li>
+        <li><span>Surveys</span></li>
+        <li><span>Affinity Mapping</span></li>
+        <li><span>Usability Testing</span></li>
+        <li><span>Competitive Analysis</span></li>
+      </ul>
+
+      <h4>Design</h4>
+      <ul>
+        <li><span>Wireframing</span></li>
+        <li><span>Prototyping</span></li>
+        <li><span>Interaction Design</span></li>
+        <li><span>Information Architecture</span></li>
+        <li><span>User Flows & Journeys</span></li>
+      </ul>
+
+      <h4>Tools</h4>
+      <ul>
+        <li><span>Figma / FigJam / Framer</span></li>
+        <li><span>WordPress / Divi</span></li>
+        <li><span>Tableau / Excel</span></li>
+        <li><span>SolidWorks</span></li>
+      </ul>
+
+      <h4>Languages</h4>
+      <ul>
+        <li><span>English</span><span>native</span></li>
+        <li><span>Vietnamese</span><span>fluent</span></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <span class="contact-intro">◆ 03 / Get in touch</span>
+  <h2 class="contact-headline">
+    Let's build<br>
+    <span class="italic">something</span> good.
+  </h2>
+
+  <div class="contact-grid">
+    <a class="contact-item" href="mailto:annielam483@gmail.com">
+      <span class="label">01 — Email</span>
+      <span class="value">annielam483@gmail.com</span>
+    </a>
+    <a class="contact-item" href="tel:+12064837601">
+      <span class="label">02 — Phone</span>
+      <span class="value">(206) 483-7601</span>
+    </a>
+    <a class="contact-item is-external" href="https://www.linkedin.com/in/annie-lam-/" target="_blank" rel="noopener">
+      <span class="label">03 — LinkedIn</span>
+      <span class="value">Annie Lam</span>
+    </a>
+    <a class="contact-item is-external" href="https://github.com/annielam2" target="_blank" rel="noopener">
+      <span class="label">04 — GitHub</span>
+      <span class="value">@annielam2</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Annie Lam — All rights reserved</span>
+  <span>Made in Seattle ✻ Hand-crafted with care</span>
+  <span>v.02 / 2026</span>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image">
+  <button class="lightbox-close" type="button">Close ✕</button>
+  <img alt="">
+</div>
+
+<script>
+  // Click any case-study image to enlarge
+  (function () {
+    const lb = document.getElementById('lightbox');
+    const lbImg = lb.querySelector('img');
+    document.addEventListener('click', function (e) {
+      const img = e.target.closest('.fig img');
+      if (img) {
+        lbImg.src = img.src;
+        lbImg.alt = img.alt;
+        lb.classList.add('open');
+        return;
+      }
+      if (lb.classList.contains('open') && e.target.closest('.lightbox')) {
+        lb.classList.remove('open');
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') lb.classList.remove('open');
+    });
+  })();
+
+  function toggleProject(btn) {
+    const caseStudy = btn.nextElementSibling;
+    const isOpen = caseStudy.classList.contains('open');
+
+    // Close all other projects
+    document.querySelectorAll('.case-study.open').forEach(cs => {
+      if (cs !== caseStudy) {
+        cs.classList.remove('open');
+        cs.previousElementSibling.classList.remove('open');
+      }
+    });
+
+    // Toggle this one
+    if (isOpen) {
+      caseStudy.classList.remove('open');
+      btn.classList.remove('open');
+    } else {
+      caseStudy.classList.add('open');
+      btn.classList.add('open');
+    }
+  }
+</script>
+
+</body>
+</html>
